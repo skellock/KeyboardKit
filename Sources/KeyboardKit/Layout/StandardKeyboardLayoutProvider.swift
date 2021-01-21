@@ -49,7 +49,7 @@ open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
     private let rightSpaceAction: KeyboardAction?
     
     open func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout {
-        let rows = context.actionRows(for: context)
+        let rows = context.actionRows
         let iPad = context.device.userInterfaceIdiom == .pad
         return keyboardLayout(for: context, iPad: iPad, rows: rows)
     }
@@ -215,11 +215,11 @@ private extension StandardKeyboardLayoutProvider {
     
     func iPhoneLowerLeadingActions(for context: KeyboardContext) -> KeyboardActionRow {
         guard let action = context.keyboardType.standardSideKeyboardSwitcherAction else { return [] }
-        return [action]
+        return [action, .none]
     }
     
     func iPhoneLowerTrailingActions(for context: KeyboardContext) -> KeyboardActionRow {
-        [.backspace]
+        [.none, .backspace]
     }
     
     func iPhoneBottomActions(for context: KeyboardContext) -> KeyboardActionRow {
@@ -250,20 +250,19 @@ private extension StandardKeyboardLayoutProvider {
 
 private extension KeyboardContext {
 
-    func actionRows(for context: KeyboardContext) -> KeyboardActionRows {
-        let rows = inputRows(for: context)
-        return KeyboardActionRows(characters: rows)
+    var actionRows: KeyboardActionRows {
+        KeyboardActionRows(characters: inputRows)
     }
     
-    func inputRows(for context: KeyboardContext) -> [KeyboardInputSet.InputRow] {
+    var inputRows: [KeyboardInputSet.InputRow] {
         let provider = keyboardInputSetProvider
         switch keyboardType {
         case .alphabetic(let state):
-            let rows = provider.alphabeticInputSet(for: context).inputRows
+            let rows = provider.alphabeticInputSet(for: self).inputRows
             return state.isUppercased ? rows.uppercased() : rows
-        case .numeric: return provider.numericInputSet(for: context).inputRows
-        case .symbolic: return provider.symbolicInputSet(for: context).inputRows
-        default: return provider.alphabeticInputSet(for: context).inputRows
+        case .numeric: return provider.numericInputSet(for: self).inputRows
+        case .symbolic: return provider.symbolicInputSet(for: self).inputRows
+        default: return provider.alphabeticInputSet(for: self).inputRows
         }
     }
 }

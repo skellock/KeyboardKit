@@ -50,6 +50,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `KeyboardInputSetProvider` no longer takes a context as function input.
 * `KeyboardInputViewController` `context` is now an `ObservableKeyboardContext`.
 * `KeyboardInputViewController` `context` is now called `keyboardContext`.
+* `KeyboardLayout` has been converted to a struct.
 * `KeyboardLayoutProvider` no longer takes a context as function input.
 * `SecondaryCalloutActionProvider` no longer takes a context as function input.
 * `SecondaryInputCalloutContext` no longer requires a context init parameter.
@@ -80,6 +81,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `KeyboardInputViewController` `addKeyboardGestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardInputViewController` `context` has been renamed to `keyboardContext`.
 * `KeyboardInputViewController+Gestures` has been converted to `KeyboardButton+Gestures`.
+* `KeyboardLayout` `actionRows` has been renamed to `rows`.
 * `PhotosImageService` and `StandardPhotosImageService` have been removed.
 * `Settings` has been entirely removed.
 * `SecondaryInputCalloutContext.shared` has been removed. Use the environment object instead.

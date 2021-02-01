@@ -66,7 +66,7 @@ open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
         let rows = iPad
             ? iPadActions(for: context, rows: rows)
             : iPhoneActions(for: context, rows: rows)
-        return KeyboardLayout(actionRows: rows)
+        return KeyboardLayout(rows: rows)
     }
 }
 

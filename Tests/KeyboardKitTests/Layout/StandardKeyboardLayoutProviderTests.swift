@@ -47,7 +47,7 @@ class StandardKeyboardLayoutProviderTests: QuickSpec {
             
             it("is correct for a home button phone") {
                 context.needsInputModeSwitchKey = true
-                let result = provider.keyboardLayout(iPad: false, rows: rows).actionRows
+                let result = provider.keyboardLayout(iPad: false, rows: rows).rows
                 verifyStandardPhoneResult(result)
                 let bottom: [KeyboardAction] = [.keyboardType(.numeric), .nextKeyboard, .done, .space, .escape, .newLine]
                 expect(result[3]).to(equal(bottom))
@@ -55,7 +55,7 @@ class StandardKeyboardLayoutProviderTests: QuickSpec {
             
             it("is correct for a notch phone") {
                 context.needsInputModeSwitchKey = false
-                let result = provider.keyboardLayout(iPad: false, rows: rows).actionRows
+                let result = provider.keyboardLayout(iPad: false, rows: rows).rows
                 verifyStandardPhoneResult(result)
                 let bottom: [KeyboardAction] = [.keyboardType(.numeric), .done, .space, .escape, .newLine]
                 expect(result[3]).to(equal(bottom))
@@ -63,7 +63,7 @@ class StandardKeyboardLayoutProviderTests: QuickSpec {
             
             it("is correct for a home button pad") {
                 context.needsInputModeSwitchKey = true
-                let result = provider.keyboardLayout(iPad: true, rows: rows).actionRows
+                let result = provider.keyboardLayout(iPad: true, rows: rows).rows
                 expect(result[0].first).to(equal(KeyboardAction.character("q")))
                 expect(result[0].last).to(equal(.backspace))
                 expect(result[1].first).to(equal(KeyboardAction.character("a")))
@@ -76,7 +76,7 @@ class StandardKeyboardLayoutProviderTests: QuickSpec {
             
             it("is correct for a non-home button pad") {
                 context.needsInputModeSwitchKey = false
-                let result = provider.keyboardLayout(iPad: true, rows: rows).actionRows
+                let result = provider.keyboardLayout(iPad: true, rows: rows).rows
                 let expectedKeyboardType = KeyboardAction.keyboardType(.alphabetic(.capsLocked))
                 expect(result[0].first).to(equal(.tab))
                 expect(result[0].last).to(equal(.backspace))

@@ -16,6 +16,6 @@ public class PreviewKeyboardLayoutProvider: KeyboardLayoutProvider {
     public init() {}
     
     public func keyboardLayout() -> KeyboardLayout {
-        KeyboardLayout(actionRows: KeyboardActionRows())
+        KeyboardLayout(rows: [])
     }
 }

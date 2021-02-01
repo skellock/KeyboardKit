@@ -26,7 +26,7 @@ public struct SystemKeyboard: View {
         buttonBuilder: @escaping ButtonBuilder = Self.standardButtonBuilder) {
         self.actionHandler = actionHandler
         self.appearance = appearance
-        self.rows = layout.actionRows
+        self.rows = layout.rows
         self.dimensions = dimensions
         self.buttonBuilder = buttonBuilder
     }

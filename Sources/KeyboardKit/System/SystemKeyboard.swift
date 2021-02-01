@@ -28,7 +28,6 @@ public struct SystemKeyboard: View {
         self.layout = layout
         self.actionHandler = actionHandler
         self.appearance = appearance
-        self.rows = layout.rows
         self.inputCalloutStyle = inputCalloutStyle
         self.secondaryInputCalloutStyle = secondaryInputCalloutStyle
         self.buttonBuilder = buttonBuilder
@@ -37,12 +36,12 @@ public struct SystemKeyboard: View {
     private let actionHandler: KeyboardActionHandler
     private let appearance: KeyboardAppearance
     private let buttonBuilder: ButtonBuilder
-    private let rows: KeyboardActionRows
     private let inputCalloutStyle: InputCalloutStyle?
     private let layout: KeyboardLayout
     private let secondaryInputCalloutStyle: SecondaryInputCalloutStyle?
     
     @State private var keyboardSize: CGSize = .zero
+    @State private var referenceSize: CGSize = .zero
     
     @EnvironmentObject private var context: ObservableKeyboardContext
     
@@ -51,9 +50,7 @@ public struct SystemKeyboard: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            ForEach(rows.enumerated().map { $0 }, id: \.offset) {
-                row(at: $0.offset, actions: $0.element)
-            }
+            rows(for: layout)
         }
         .bindSize(to: $keyboardSize)
         .inputCallout(style: inputCalloutStyle ?? .systemStyle(for: context))
@@ -74,16 +71,26 @@ public extension SystemKeyboard {
 
 private extension SystemKeyboard {
     
-    func row(at index: Int, actions: KeyboardActions) -> some View {
+    func rows(for layout: KeyboardLayout) -> some View {
+        ForEach(Array(layout.rows.enumerated()), id: \.offset) {
+            row(for: $0.element)
+        }
+    }
+
+    func row(for row: KeyboardLayoutRow) -> some View {
         HStack(spacing: 0) {
-            ForEach(Array(actions.enumerated()), id: \.offset) {
-                SystemKeyboardButtonRowItem(
-                    action: $0.element,
-                    actionHandler: actionHandler,
-                    appearance: appearance,
-                    buttonContent: buttonBuilder($0.element, keyboardSize),
-                    layout: layout)
+            ForEach(Array(row.items.enumerated()), id: \.offset) {
+                rowItem(for: $0.element)
             }
         }
+    }
+    
+    func rowItem(for item: KeyboardLayoutItem) -> some View {
+        SystemKeyboardItem(
+            item: item,
+            content: buttonBuilder(item.action, keyboardSize),
+            appearance: appearance,
+            keyboardSize: keyboardSize,
+            referenceSize: $referenceSize)
     }
 }

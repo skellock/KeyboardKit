@@ -19,5 +19,5 @@ import Foundation
  */
 public protocol KeyboardLayoutProvider: AnyObject {
     
-    func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout
+    func keyboardLayout() -> KeyboardLayout
 }

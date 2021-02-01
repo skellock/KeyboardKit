@@ -37,12 +37,14 @@ class KeyboardViewController: KeyboardInputViewController {
     // MARK: - View Controller Lifecycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         keyboardActionHandler = DemoKeyboardActionHandler(
             inputViewController: self,
             toastContext: toastContext)
-        keyboardLayoutProvider = StandardKeyboardLayoutProvider(
-            inputSetProvider: keyboardInputSetProvider)
+        keyboardLayoutProvider = DemoKeyboardLayoutProvider(
+            context: keyboardContext,
+            inputSetProvider: keyboardInputSetProvider,
+            dictationReplacement: .keyboardType(.emojis))
+        super.viewDidLoad()
         setup(with: keyboardView)
     }
     

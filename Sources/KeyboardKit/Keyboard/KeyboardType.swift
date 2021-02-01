@@ -15,7 +15,7 @@ import UIKit
  If you need a keyboard type that is not represented here or
  that is app-specific, you can use `.custom`.
  */
-public enum KeyboardType: Equatable {
+public enum KeyboardType: Equatable, Identifiable {
 
     case
     alphabetic(_ state: KeyboardShiftState),
@@ -28,6 +28,21 @@ public enum KeyboardType: Equatable {
 }
 
 public extension KeyboardType {
+    
+    /**
+     The unique id of the keyboard type.
+     */
+    var id: String {
+        switch self {
+        case .alphabetic: return "alphabetic"
+        case .numeric: return "numeric"
+        case .symbolic: return "symbolic"
+        case .email: return "email"
+        case .emojis: return "emojis"
+        case .images: return "images"
+        case .custom(let name): return name
+        }
+    }
     
     /**
      Whether or not the keyboard type is alphabetic.

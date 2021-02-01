@@ -15,7 +15,7 @@ public class PreviewKeyboardLayoutProvider: KeyboardLayoutProvider {
     
     public init() {}
     
-    public func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout {
-        KeyboardLayout(rows: [], buttonHeight: 0, buttonInsets: .init())
+    public func keyboardLayout() -> KeyboardLayout {
+        KeyboardLayout(rows: [])
     }
 }

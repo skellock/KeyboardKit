@@ -11,7 +11,8 @@ import Foundation
 /**
  This enum lists the various shift states a keyboard can use.
  */
-public enum KeyboardShiftState {
+public enum KeyboardShiftState: String, Identifiable {
+    
     case
     lowercased,
     uppercased,
@@ -19,6 +20,8 @@ public enum KeyboardShiftState {
 }
 
 public extension KeyboardShiftState {
+    
+    var id: String { rawValue }
     
     var isUppercased: Bool {
         switch self {

@@ -16,6 +16,8 @@ Although these release notes will aim at covering everything that changes in thi
 
 Besides the new things listed below, there are a bunch of new extensions, images etc. 
 
+* `BaseKeyboardLayoutProvider` is a new base class that provides layout providers with base functionality.
+* `BaseSecondaryCalloutActionProvider` is a new base class that provides action providers with base functionality.
 * `Callouts/Providers` have new locale-specific callout action providers.
 * `Image.emoji` no longer requires iOS 14, but uses `person.crop.circle` as fallback on iOS 13.
 * `KeyboardAppearance` has a new `image(for:)`.
@@ -30,6 +32,8 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardInputViewController` has a new `keyboardLayoutProvider`.
 * `KeyboardInputViewController` has a new `keyboardSecondaryInputActionProvider`.
 * `KeyboardInputViewController` has a new `keyboardSecondaryInputCalloutContext`.
+* `KeyboardInputViewController` has new properties for `keyboardLocale` and `keyboardType`.
+* `KeyboardInputViewController` has new functions for `changeKeyboardLocale(to:)` and `changeKeyboardType(to:)`.
 * `KeyboardInputViewController` `setup(with:)` is now open and overridable.
 * `Layout` has new types for working with keyboard layouts.
 * `Locale` is a new namespace with a few new locale-specific utils.
@@ -56,6 +60,8 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardInputSetProvider` no longer takes a context as function input.
 * `KeyboardInputViewController` `context` is now an `ObservableKeyboardContext`.
 * `KeyboardInputViewController` `context` is now called `keyboardContext`.
+* `KeyboardLayout` has been converted to a struct.
+* `KeyboardLayoutProvider` no longer takes a context as function input.
 * `SecondaryCalloutActionProvider` no longer takes a context as function input.
 * `SecondaryInputCalloutContext` no longer requires a context init parameter.
 * `StandardKeyboardActionHandler` no longer depends on an input view controller.
@@ -63,6 +69,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `StandardKeyboardActionHandler` now requires an injected autocomplete and keyboard change action.
 * `StandardKeyboardActionHandler` `triggerAutocomplete` is replaced by an injectable function.
 * `StandardKeyboardBehavior` now requires an injected keyboard context.
+* `StandardKeyboardLayoutProvider` now requires an injected keyboard context.
 * `StandardKeyboardInputSetProvider` now requires an injected keyboard context. 
 
 
@@ -86,6 +93,8 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardInputSet` standard input set extensions have been removed.
 * `KeyboardInputViewController` `addKeyboardGestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardInputViewController` `context` has been renamed to `keyboardContext`.
+* `KeyboardInputViewController` `setupKeyboard` has been removed.
+* `KeyboardInputViewController` `viewWillSyncWithTextDocumentProxy` has been removed.
 * `KeyboardInputViewController+Gestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardLayout` `actionRows` has been renamed to `rows`.
 * `PhotosImageService` and `StandardPhotosImageService` have been removed.
@@ -98,6 +107,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `StandardKeyboardAppearanceProvider` has been renamed to `StandardKeyboardAppearance`.
 * `StandardKeyboardLayoutProvider` no longer has left and right space actions. Implement this in a custom provider instead.
 * `SystemKeyboardDimensions` is no longer used and has been removed.
+* `SystemKeyboardButtonRowItem` has been removed.
 * `UIImage+pasteboard` has been moved to the demo.
 * `UIImage+photos` has been moved to the demo.
 * `UIImage+resized` has been removed.

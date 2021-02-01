@@ -42,7 +42,9 @@ class KeyboardViewController: KeyboardInputViewController {
         keyboardActionHandler = DemoKeyboardActionHandler(
             inputViewController: self)
         keyboardLayoutProvider = StandardKeyboardLayoutProvider(
-            inputSetProvider: keyboardInputSetProvider)
+            context: keyboardContext,
+            inputSetProvider: keyboardInputSetProvider,
+            dictationReplacement: .keyboardType(.emojis))
     }
     
     override func textDidChange(_ textInput: UITextInput?) {
@@ -72,7 +74,7 @@ class KeyboardViewController: KeyboardInputViewController {
     
     // MARK: - Keyboard Functionality
     
-    override func setupKeyboard() {
+    func setupKeyboard() {
         DispatchQueue.main.async {
             self.setupDemoKeyboard()
         }

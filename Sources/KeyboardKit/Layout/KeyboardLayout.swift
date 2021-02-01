@@ -14,22 +14,11 @@ import SwiftUI
  most often consist of multiple input button rows surrounded
  by system buttons.
  */
-public class KeyboardLayout: Equatable {
+public struct KeyboardLayout: Equatable {
     
-    public init(
-        rows: KeyboardActionRows,
-        buttonHeight: CGFloat,
-        buttonInsets: EdgeInsets) {
+    public init(rows: [KeyboardLayoutRow]) {
         self.rows = rows
-        self.buttonHeight = buttonHeight
-        self.buttonInsets = buttonInsets
     }
     
-    public let rows: KeyboardActionRows
-    public let buttonHeight: CGFloat
-    public let buttonInsets: EdgeInsets
-    
-    public static func == (lhs: KeyboardLayout, rhs: KeyboardLayout) -> Bool {
-        lhs.rows == rhs.rows
-    }
+    public let rows: [KeyboardLayoutRow]
 }

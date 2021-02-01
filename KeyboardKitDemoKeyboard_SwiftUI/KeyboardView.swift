@@ -25,11 +25,11 @@ struct KeyboardView: View {
     @EnvironmentObject var autocompleteContext: ObservableAutocompleteContext
     @EnvironmentObject var keyboardContext: ObservableKeyboardContext
     @EnvironmentObject var toastContext: KeyboardToastContext
-    
+
     var body: some View {
-        keyboardView.keyboardToast(
-            context: toastContext,
-            background: toastBackground)
+        keyboardView
+            .id(keyboardContext.id)
+            .keyboardToast(context: toastContext, background: toastBackground)
     }
     
     @ViewBuilder
@@ -40,6 +40,13 @@ struct KeyboardView: View {
         case .images: imageKeyboard
         default: Button("???", action: switchToDefaultKeyboard)
         }
+    }
+}
+
+extension ObservableKeyboardContext: Identifiable {
+    
+    public var id: String {
+        locale.identifier + keyboardType.id
     }
 }
 
@@ -109,7 +116,7 @@ private extension KeyboardView {
         VStack(spacing: 0) {
             autocompleteBar
             SystemKeyboard(
-                layout: keyboardLayoutProvider.keyboardLayout(for: keyboardContext),
+                layout: keyboardLayoutProvider.keyboardLayout(),
                 actionHandler: keyboardActionHandler,
                 appearance: keyboardAppearance,
                 buttonBuilder: buttonBuilder)

@@ -126,6 +126,7 @@
 		A94265712490D9C300EB5551 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046B234A718C00355331 /* Colors.xcassets */; };
 		A94265722490D9C300EB5551 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046C234A718C00355331 /* Images.xcassets */; };
 		A94C721824AE238900077EEA /* DemoKeyboardActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C721724AE238900077EEA /* DemoKeyboardActionHandler.swift */; };
+		A95077D925CA04F5009B963D /* DemoKeyboardLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95077D825CA04F5009B963D /* DemoKeyboardLayoutProvider.swift */; };
 		A95CC2C824ACF83300436FD3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = A95CC2C724ACF83300436FD3 /* KeyboardKit */; };
 		A95CC2CA24ACF84300436FD3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = A95CC2C924ACF84300436FD3 /* KeyboardKit */; };
 		A95CC2CC24ACF84B00436FD3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = A95CC2CB24ACF84B00436FD3 /* KeyboardKit */; };
@@ -257,6 +258,7 @@
 		A942653C2490CDCC00EB5551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A94265512490D1C400EB5551 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		A94C721724AE238900077EEA /* DemoKeyboardActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoKeyboardActionHandler.swift; sourceTree = "<group>"; };
+		A95077D825CA04F5009B963D /* DemoKeyboardLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoKeyboardLayoutProvider.swift; sourceTree = "<group>"; };
 		A97D2CC425B44B7F00E270D8 /* EnhancedEmojiKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnhancedEmojiKeyboard.swift; sourceTree = "<group>"; };
 		A97D2CC625B44BA200E270D8 /* HorizontalFloatingHeaderLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalFloatingHeaderLayout.swift; sourceTree = "<group>"; };
 		A97D2CC725B44BA200E270D8 /* HFloatingHeaderButtonCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFloatingHeaderButtonCollectionView.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				A94C721724AE238900077EEA /* DemoKeyboardActionHandler.swift */,
+				A95077D825CA04F5009B963D /* DemoKeyboardLayoutProvider.swift */,
 				843CBFAA250EA93100BA541F /* ImageKeyboard.swift */,
 				A942653C2490CDCC00EB5551 /* Info.plist */,
 				A94265512490D1C400EB5551 /* KeyboardView.swift */,
@@ -790,6 +793,7 @@
 				A94265522490D1C400EB5551 /* KeyboardView.swift in Sources */,
 				A94265702490D9BF00EB5551 /* Assets.swift in Sources */,
 				843CBFAB250EA93100BA541F /* ImageKeyboard.swift in Sources */,
+				A95077D925CA04F5009B963D /* DemoKeyboardLayoutProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1314,7 +1318,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielsaidi/KeyboardKit";
 			requirement = {
-				branch = "layout-changes-v2";
+				branch = postlayout;
 				kind = branch;
 			};
 		};

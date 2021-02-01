@@ -37,13 +37,11 @@ open class KeyboardInputViewController: UIInputViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         Self.shared = self
-        setupKeyboard()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         keyboardContext.sync(with: self)
-        viewWillSyncWithTextDocumentProxy()
     }
     
     open override func viewWillLayoutSubviews() {
@@ -54,15 +52,14 @@ open class KeyboardInputViewController: UIInputViewController {
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         keyboardContext.sync(with: self)
         super.traitCollectionDidChange(previousTraitCollection)
-    }
-    
-    open func viewWillSyncWithTextDocumentProxy() {
-        keyboardContext.textDocumentProxy = textDocumentProxy
+        trySetupLastView()
     }
     
     
     // MARK: - Setup
-
+    
+    private var lastSetupView: AnyView?
+    
     /**
      Remove all subviews from the vc view and add a `SwiftUI`
      view to it. This will pin the view to the edges of this
@@ -72,12 +69,18 @@ open class KeyboardInputViewController: UIInputViewController {
      view, that can be used by all nested views.
      */
     open func setup<Content: View>(with view: Content) {
+        lastSetupView = AnyView(view)
+        trySetupLastView()
+    }
+    
+    private func trySetupLastView() {
+        guard let view = lastSetupView else { return }
         self.view.subviews.forEach { $0.removeFromSuperview() }
-        let view = view
+        let hostingView = view
             .environmentObject(keyboardContext)
             .environmentObject(keyboardInputCalloutContext)
             .environmentObject(keyboardSecondaryInputCalloutContext)
-        let controller = KeyboardHostingController(rootView: view)
+        let controller = KeyboardHostingController(rootView: hostingView)
         controller.add(to: self)
     }
     
@@ -128,6 +131,7 @@ open class KeyboardInputViewController: UIInputViewController {
      The extension's default keyboard layout provider.
      */
     public lazy var keyboardLayoutProvider: KeyboardLayoutProvider = StandardKeyboardLayoutProvider(
+        context: keyboardContext,
         inputSetProvider: keyboardInputSetProvider)
     
     /**
@@ -142,20 +146,6 @@ open class KeyboardInputViewController: UIInputViewController {
     public lazy var keyboardSecondaryInputCalloutContext = SecondaryInputCalloutContext(
         actionProvider: keyboardSecondaryInputActionProvider,
         actionHandler: keyboardActionHandler)
-    
-    /**
-     The keyboard type that is currently used by the context.
-     
-     Setting this value will update the context's type, then
-     call `setupKeyboard`.
-     */
-    public var keyboardType: KeyboardType {
-        get { keyboardContext.keyboardType }
-        set {
-            keyboardContext.keyboardType = newValue
-            setupKeyboard()
-        }
-    }
     
     
     // MARK: - View Properties
@@ -175,14 +165,6 @@ open class KeyboardInputViewController: UIInputViewController {
     
     
     // MARK: - Text And Selection Change
-    
-    /**
-     Setup the keyboard, given the current state of your app.
-     
-     You can override this function to implement how a setup
-     should behave in your app. This does nothing by default.
-     */
-    open func setupKeyboard() {}
     
     open override func selectionWillChange(_ textInput: UITextInput?) {
         super.selectionWillChange(textInput)
@@ -226,19 +208,22 @@ open class KeyboardInputViewController: UIInputViewController {
      nested service class to avoid bilinear dependencies.
      */
     open func changeKeyboardType(to type: KeyboardType) {
-        keyboardType = type
+        keyboardContext.keyboardType = type
     }
     
     /**
      Perform an autocomplete operation. You can override the
      function to provide custom autocomplete logic.
+     
+     This function can be called directly or injected into a
+     nested service class to avoid bilinear dependencies.
      */
     open func performAutocomplete() {}
-    
+
     /**
      Reset autocomplete state. You can override the function
      to provide custom autocomplete logic.
-     */
+    */
     open func resetAutocomplete() {}
 }
 

@@ -20,7 +20,5 @@ public class StaticKeyboardLayoutProvider: KeyboardLayoutProvider {
     
     private let layout: KeyboardLayout
     
-    public func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout {
-        layout
-    }
+    public func keyboardLayout() -> KeyboardLayout { layout }
 }

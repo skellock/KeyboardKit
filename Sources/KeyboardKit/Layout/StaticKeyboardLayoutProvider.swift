@@ -18,12 +18,10 @@ import Foundation
 public class StaticKeyboardLayoutProvider: KeyboardLayoutProvider {
     
     public init(keyboardLayout: KeyboardLayout) {
-        self.keyboardLayout = keyboardLayout
+        self.layout = keyboardLayout
     }
     
-    private let keyboardLayout: KeyboardLayout
+    private let layout: KeyboardLayout
     
-    public func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout {
-        keyboardLayout
-    }
+    public func keyboardLayout() -> KeyboardLayout { layout }
 }

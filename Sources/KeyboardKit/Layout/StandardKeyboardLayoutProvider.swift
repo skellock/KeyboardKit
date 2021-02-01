@@ -39,26 +39,28 @@ import UIKit
 open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
     
     public init(
+        context: KeyboardContext,
         inputSetProvider: KeyboardInputSetProvider,
         leftSpaceAction: KeyboardAction? = nil,
         rightSpaceAction: KeyboardAction? = nil) {
+        self.context = context
         self.inputSetProvider = inputSetProvider
         self.leftSpaceAction = leftSpaceAction
         self.rightSpaceAction = rightSpaceAction
     }
     
+    private let context: KeyboardContext
     private let inputSetProvider: KeyboardInputSetProvider
     private let leftSpaceAction: KeyboardAction?
     private let rightSpaceAction: KeyboardAction?
     
-    open func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout {
+    open func keyboardLayout() -> KeyboardLayout {
         let rows = actionRows(for: context)
         let iPad = context.device.userInterfaceIdiom == .pad
-        return keyboardLayout(for: context, iPad: iPad, rows: rows)
+        return keyboardLayout(iPad: iPad, rows: rows)
     }
     
     func keyboardLayout(
-        for context: KeyboardContext,
         iPad: Bool,
         rows: KeyboardActionRows) -> KeyboardLayout {
         let rows = iPad

@@ -16,8 +16,6 @@ public protocol KeyboardDimensions {
     
     var buttonHeight: CGFloat { get }
     var buttonInsets: EdgeInsets { get }
-    var longButtonWidth: CGFloat { get }
-    var shortButtonWidth: CGFloat { get }
     
     func width(for action: KeyboardAction, keyboardWidth: CGFloat, context: KeyboardContext) -> CGFloat?
 }

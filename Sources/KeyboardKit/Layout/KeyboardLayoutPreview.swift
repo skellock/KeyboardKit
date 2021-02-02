@@ -48,18 +48,18 @@ struct KeyboardLayoutPreview: View {
             bars(count: 100)
             VStack(spacing: 0) {
                 repeatingView(count: 10, view: { button().width(.reference(.available), referenceSize: $referenceSize) })
-                repeatingView(count: 9, view: { button().width(.fromReference, referenceSize: $referenceSize) })
+                repeatingView(count: 9, view: { button().width(.useReference, referenceSize: $referenceSize) })
                 HStack(spacing: 0) {
                     systemButton().width(.percentage(0.125), totalWidth: totalWidth)
                     spacer()
-                    repeatingView(count: 7, view: { button().width(.fromReference, referenceSize: $referenceSize) })
+                    repeatingView(count: 7, view: { button().width(.useReference, referenceSize: $referenceSize) })
                     spacer()
                     systemButton().width(.percentage(0.125), totalWidth: totalWidth)
                 }
                 HStack(spacing: 0) {
                     systemButton().width(.percentage(0.125), totalWidth: totalWidth)
                     systemButton().width(.percentage(0.125), totalWidth: totalWidth)
-                    button().width(.fromReference, referenceSize: $referenceSize)
+                    button().width(.useReference, referenceSize: $referenceSize)
                     button()
                     systemButton().width(.percentage( 0.25), totalWidth: totalWidth)
                 }

@@ -200,7 +200,7 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
             
             it("is correct for all actions") {
                 expect(result(for: .character(""), at: 0)).to(equal(expectedSize(for: .reference(.available))))
-                expect(result(for: .character(""), at: 1)).to(equal(expectedSize(for: .fromReference)))
+                expect(result(for: .character(""), at: 1)).to(equal(expectedSize(for: .useReference)))
                 expect(result(for: .backspace, at: 0)).to(equal(expectedSize(for: .available)))
             }
         }
@@ -216,8 +216,8 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
             }
             
             it("is from reference for other characters actions") {
-                expect(result(for: .character(""), at: 1)).to(equal(.fromReference))
-                expect(result(for: .character(""), at: 2)).to(equal(.fromReference))
+                expect(result(for: .character(""), at: 1)).to(equal(.useReference))
+                expect(result(for: .character(""), at: 2)).to(equal(.useReference))
             }
             
             it("is available for other actions") {

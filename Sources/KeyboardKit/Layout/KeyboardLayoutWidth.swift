@@ -21,12 +21,7 @@ public indirect enum KeyboardLayoutWidth: Equatable {
     case available
     
     /**
-     Use the width from a `reference` button.
-     */
-    case fromReference
-    
-    /**
-     Use a percentual width of the total available width.
+     Use a percentual width of the total available row width.
      */
     case percentage(_ percent: CGFloat)
     
@@ -37,7 +32,18 @@ public indirect enum KeyboardLayoutWidth: Equatable {
     
     /**
      Apply a certain width and use the result as a reference
-     width for other `fromReference`-sized button views.
+     width that can then be used by other layout items using
+     either the `useReference` or `useReferencePercentage`.
      */
     case reference(_ width: KeyboardLayoutWidth = .available)
+    
+    /**
+     Use the width of a `reference` item.
+     */
+    case useReference
+    
+    /**
+     Use the percentual width of a `reference` item.
+     */
+    case useReferencePercentage(_ percent: CGFloat)
 }

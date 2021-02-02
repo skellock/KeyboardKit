@@ -18,15 +18,18 @@ public extension View {
      
      The `referenceSize` binding param is only required when
      using `.reference` and `.fromReference` width types.
+     
+     `TODO` Unit test these extensions.
      */
     @ViewBuilder
     func width(_ width: KeyboardLayoutWidth, totalWidth: CGFloat = .zero, referenceSize: Binding<CGSize> = .constant(.zero)) -> some View {
         switch width {
-        case .fromReference: self.frame(width: referenceSize.width.wrappedValue)
+        case .available: self
         case .percentage(let percent): self.frame(width: percent * totalWidth)
         case .points(let points): self.frame(width: points)
         case .reference(let width): self.frame(width: self.width(for: width, totalWidth: totalWidth, referenceSize: referenceSize.wrappedValue)).bindSize(to: referenceSize)
-        case .available: self
+        case .useReference: self.frame(width: referenceSize.width.wrappedValue)
+        case .useReferencePercentage(let percent): self.frame(width: percent * referenceSize.width.wrappedValue)
         }
     }
 }
@@ -38,9 +41,9 @@ private extension View {
      */
     func width(for width: KeyboardLayoutWidth, totalWidth: CGFloat, referenceSize: CGSize) -> CGFloat? {
         switch width {
+        case .available: return nil
         case .percentage(let percent): return percent * totalWidth
         case .points(let points): return points
-        case .available: return nil
         default: return 0
         }
     }

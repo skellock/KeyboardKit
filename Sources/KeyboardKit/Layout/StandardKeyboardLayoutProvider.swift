@@ -21,8 +21,15 @@ import SwiftUI
  */
 open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayoutProvider {
     
-    private lazy var iPadLayout = iPadKeyboardLayoutProvider(context: context, inputSetProvider: inputSetProvider)
-    private lazy var iPhoneLayout = iPhoneKeyboardLayoutProvider(context: context, inputSetProvider: inputSetProvider)
+    private lazy var iPadLayout = iPadKeyboardLayoutProvider(
+        context: context,
+        inputSetProvider: inputSetProvider,
+        dictationReplacement: dictationReplacement)
+    
+    private lazy var iPhoneLayout = iPhoneKeyboardLayoutProvider(
+        context: context,
+        inputSetProvider: inputSetProvider,
+        dictationReplacement: dictationReplacement)
     
     var layout: KeyboardLayoutProvider { isPad ? iPadLayout : iPhoneLayout }
     

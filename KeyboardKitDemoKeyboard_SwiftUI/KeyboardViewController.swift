@@ -51,6 +51,14 @@ class KeyboardViewController: KeyboardInputViewController {
         setup(with: keyboardView)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.setup(with: EmptyView())
+        DispatchQueue.main.async {
+            self.setup(with: self.keyboardView)
+        }
+    }
+    
     
     // MARK: - Properties
     

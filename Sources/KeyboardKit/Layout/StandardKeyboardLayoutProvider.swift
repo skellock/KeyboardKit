@@ -36,4 +36,9 @@ open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardL
     open override func keyboardLayout() -> KeyboardLayout {
         layout.keyboardLayout()
     }
+    
+    open override func layoutSize(for action: KeyboardAction, at row: Int) -> KeyboardLayoutItem.Size {
+        let provider = isPad ? iPadLayout : iPhoneLayout
+        return provider.layoutSize(for: action, at: row)
+    }
 }

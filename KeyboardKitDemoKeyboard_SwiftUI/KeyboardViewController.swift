@@ -43,7 +43,7 @@ class KeyboardViewController: KeyboardInputViewController {
             autocompleteAction: performAutocomplete,
             changeKeyboardTypeAction: changeKeyboardType,
             toastContext: toastContext)
-        keyboardLayoutProvider = StandardKeyboardLayoutProvider(
+        keyboardLayoutProvider = DemoKeyboardLayoutProvider(
             context: keyboardContext,
             inputSetProvider: keyboardInputSetProvider,
             dictationReplacement: .keyboardType(.emojis))

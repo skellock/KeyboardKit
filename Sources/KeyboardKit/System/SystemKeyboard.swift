@@ -70,7 +70,7 @@ private extension SystemKeyboard {
     func row(at index: Int, row: KeyboardLayoutItemRow) -> some View {
         HStack(spacing: 0) {
             ForEach(Array(row.enumerated()), id: \.offset) { item in
-                SystemKeyboardButtonRowItem(
+                SystemKeyboardItem(
                     item: item.element,
                     actionHandler: actionHandler,
                     appearance: appearance,

@@ -94,6 +94,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `StandardKeyboardAppearanceProvider` has been renamed to `StandardKeyboardAppearance`.
 * `StandardKeyboardLayoutProvider` no longer has left and right space actions. Implement this in a custom provider instead.
 * `SystemKeyboardDimensions` is no longer used and has been removed.
+* `SystemKeyboardButtonRowItem` has been renamed to `SystemKeyboardItem`.
 * `UIImage+pasteboard` has been moved to the demo.
 * `UIImage+photos` has been moved to the demo.
 * `UIImage+resized` has been removed.

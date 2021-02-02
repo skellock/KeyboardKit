@@ -71,12 +71,12 @@ open class iPadKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayou
     
     open override func layoutWidth(for action: KeyboardAction, at row: Int) -> KeyboardLayoutWidth {
         switch action {
-        case dictationReplacement: return shortButtonWidth
-        case .backspace: return mediumButtonWidth
-        case .keyboardType: return shortButtonWidth
-        case .nextKeyboard: return shortButtonWidth
-        case .newLine: return longButtonWidth
-        case .shift: return mediumButtonWidth
+        //case dictationReplacement: return shortButtonWidth
+        //case .backspace: return mediumButtonWidth
+        //case .keyboardType: return shortButtonWidth
+        //case .nextKeyboard: return shortButtonWidth
+        //case .newLine: return longButtonWidth
+        //case .shift: return mediumButtonWidth
         default: return super.layoutWidth(for: action, at: row)
         }
     }

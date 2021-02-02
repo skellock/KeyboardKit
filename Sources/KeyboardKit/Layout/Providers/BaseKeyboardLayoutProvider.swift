@@ -37,12 +37,15 @@ open class BaseKeyboardLayoutProvider {
     
     public init(
         context: KeyboardContext,
-        inputSetProvider: KeyboardInputSetProvider) {
+        inputSetProvider: KeyboardInputSetProvider,
+        dictationReplacement: KeyboardAction? = nil) {
         self.context = context
         self.inputSetProvider = inputSetProvider
+        self.dictationReplacement = dictationReplacement
     }
 
     public let context: KeyboardContext
+    public let dictationReplacement: KeyboardAction?
     public let inputSetProvider: KeyboardInputSetProvider
     
     

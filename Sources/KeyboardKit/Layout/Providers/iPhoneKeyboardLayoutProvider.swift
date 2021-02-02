@@ -10,22 +10,12 @@ import SwiftUI
 
 /**
  This class provides keyboard layouts that corresponds to an
- iPhone device.
+ iPhone device, regardless of it having a home button or not.
  
  You can inherit this class and override any implementations
  to customize the standard layout.
  */
 open class iPhoneKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayoutProvider {
-    
-    public init(
-        context: KeyboardContext,
-        inputSetProvider: KeyboardInputSetProvider,
-        dictationReplacement: KeyboardAction? = nil) {
-        self.dictationReplacement = dictationReplacement
-        super.init(context: context, inputSetProvider: inputSetProvider)
-    }
-    
-    private let dictationReplacement: KeyboardAction?
     
     open override var actionRows: KeyboardActionRows {
         var rows = super.actionRows
@@ -71,3 +61,6 @@ open class iPhoneKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLay
         }
     }
 }
+
+
+

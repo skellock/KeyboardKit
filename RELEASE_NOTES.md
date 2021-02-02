@@ -79,6 +79,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `KeyboardContext` `keyboardBehavior` has been moved to the input vc.
 * `KeyboardContext` `keyboardInputSetProvider` has been moved to the input vc.
 * `KeyboardContext` `keyboardLayoutProvider` has been moved to the input vc.
+* `KeyboardDimensions` is no longer used and has been removed.
 * `KeyboardInputSet` locale extensions have been converted to separate providers.
 * `KeyboardInputViewController` `addKeyboardGestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardInputViewController` `context` has been renamed to `keyboardContext`.
@@ -92,6 +93,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `StandardKeyboardActionHandler` no longer takes an optional sender for keyboard actions.
 * `StandardKeyboardAppearanceProvider` has been renamed to `StandardKeyboardAppearance`.
 * `StandardKeyboardLayoutProvider` no longer has left and right space actions. Implement this in a custom provider instead.
+* `SystemKeyboardDimensions` is no longer used and has been removed.
 * `UIImage+pasteboard` has been moved to the demo.
 * `UIImage+photos` has been moved to the demo.
 * `UIImage+resized` has been removed.

@@ -150,7 +150,7 @@ class KeyboardAction_SystemTests: QuickSpec {
                 expect(result(for: .keyboardType(.symbolic))).to(equal("#+="))
                 expect(result(for: .keyboardType(.custom("")))).to(beNil())
                 expect(result(for: .keyboardType(.email))).to(beNil())
-                expect(result(for: .keyboardType(.emojis))).to(equal("☺"))
+                expect(result(for: .keyboardType(.emojis))).to(beNil())
                 expect(result(for: .keyboardType(.images))).to(beNil())
                 
                 expect(result(for: .none)).to(beNil())

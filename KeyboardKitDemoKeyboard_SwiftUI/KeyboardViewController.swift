@@ -51,8 +51,8 @@ class KeyboardViewController: KeyboardInputViewController {
         setup(with: keyboardView)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         self.setup(with: EmptyView())
         DispatchQueue.main.async {
             self.setup(with: self.keyboardView)

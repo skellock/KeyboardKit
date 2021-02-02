@@ -61,28 +61,32 @@ open class iPadKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayou
     
     open var lowerLeadingActions: KeyboardActions {
         guard let action = keyboardSwitcherActionForBottomInputRow else { return [] }
-        return [action, .none]
+        return [action]
     }
     
     open var lowerTrailingActions: KeyboardActions {
         guard let action = keyboardSwitcherActionForBottomInputRow else { return [] }
-        return [.none, action]
+        return [action]
     }
     
     open override func layoutWidth(for action: KeyboardAction, at row: Int) -> KeyboardLayoutWidth {
+        if isSecondRowSpacer(action, row: row) { return .useReferencePercentage(0.4) }
         switch action {
-        //case dictationReplacement: return shortButtonWidth
-        //case .backspace: return mediumButtonWidth
-        //case .keyboardType: return shortButtonWidth
-        //case .nextKeyboard: return shortButtonWidth
-        //case .newLine: return longButtonWidth
-        //case .shift: return mediumButtonWidth
+        case dictationReplacement: return .useReference
+        case .backspace: return .percentage(0.1)
+        case .dismissKeyboard: return .useReferencePercentage(1.8)
+        case .keyboardType: return .useReference
+        case .nextKeyboard: return .useReference
         default: return super.layoutWidth(for: action, at: row)
         }
     }
 }
 
 private extension iPadKeyboardLayoutProvider {
+    
+    func isSecondRowSpacer(_ action: KeyboardAction, row: Int) -> Bool {
+        action == .none && row == 1
+    }
     
     var longButtonWidth: KeyboardLayoutWidth {
         /*isPortrait ?*/ .percentage(0.24) // : .percentage(0.15)

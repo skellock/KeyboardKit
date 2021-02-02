@@ -53,6 +53,16 @@ open class BaseKeyboardLayoutProvider {
     }
     
     
+    // MARK: - Shortcut Properties
+    
+    public var isPhone: Bool { context.device.userInterfaceIdiom == .phone }
+    public var isPad: Bool { context.device.userInterfaceIdiom == .pad }
+    public var isPortrait: Bool { context.deviceOrientation.isPortrait }
+    public var isLandscape: Bool { context.deviceOrientation.isLandscape }
+    public var needsDictation: Bool { needsInputSwitcher }
+    public var needsInputSwitcher: Bool { context.needsInputModeSwitchKey }
+    
+    
     // MARK: - Properties
     
     /**

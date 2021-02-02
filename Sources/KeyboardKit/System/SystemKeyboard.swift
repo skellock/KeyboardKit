@@ -51,6 +51,7 @@ public struct SystemKeyboard: View {
         .bindSize(to: $keyboardSize)
         .inputCallout(style: .systemStyle(for: context))
         .secondaryInputCallout(style: .systemStyle(for: context))
+        .overlay(Text("\(keyboardSize.width)").background(Color.white))
     }
 }
 

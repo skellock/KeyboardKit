@@ -40,7 +40,7 @@ public struct SystemKeyboardItem<Content: View>: View {
         content
             .frame(maxWidth: .infinity)
             .frame(height: item.size.height - item.insets.top - item.insets.bottom)
-            .width(item.size.width, referenceSize: referenceSize)
+            .width(item.size.width, totalWidth: keyboardSize.width, referenceSize: referenceSize)
             .keyboardButtonStyle(for: item.action, appearance: appearance)
             .padding(item.insets)
             .frame(height: item.size.height)

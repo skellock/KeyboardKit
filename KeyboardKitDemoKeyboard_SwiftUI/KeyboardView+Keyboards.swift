@@ -21,25 +21,8 @@ extension KeyboardView {
     var systemKeyboard: some View {
         VStack(spacing: 0) {
             HStack {
-                AutocompleteToolbar(
-                    suggestions: autocompleteContext.suggestions,
-                    buttonBuilder: autocompleteButtonBuilder)
-                    
-                Image.settings
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(5)
-                    .keyboardButtonStyle(for: .character(""), appearance: keyboardAppearance)
-                    .padding(.standardKeyboardButtonInsets())
-                    .contextMenu {
-                        Button("English") {
-                            self.context.locale = LocaleKey.english.locale
-                        }
-                        Button("Swedish") {
-                            self.context.locale = LocaleKey.swedish.locale
-                        }
-                        
-                    }
+                autocompleteBar
+                settingsButton
             }.frame(height: 50)
             SystemKeyboard(
                 layout: keyboardLayoutProvider.keyboardLayout(),
@@ -50,9 +33,50 @@ extension KeyboardView {
     }
 }
 
+
+// MARK: - Private Logic
+
 private extension KeyboardView {
     
-    func autocompleteButton(for suggestion: AutocompleteSuggestion) -> AnyView {
+    func changeLocale(to locale: Locale) {
+        DispatchQueue.main.async {
+            keyboardInputViewController.changeKeyboardLocale(to: locale)
+        }
+    }
+    
+    func nextLocale() {
+        let isSwedish = context.locale.identifier == "sv"
+        let new: LocaleKey = isSwedish ? .english : .swedish
+        changeLocale(to: new.locale)
+    }
+}
+
+
+// MARK: - Private View Logic
+
+private extension KeyboardView {
+    
+    var autocompleteBar: some View {
+        AutocompleteToolbar(
+            suggestions: autocompleteContext.suggestions,
+            buttonBuilder: autocompleteBarButtonBuilder)
+    }
+    
+    var settingsButton: some View {
+        Image.settings
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .padding(5)
+            .keyboardButtonStyle(for: .character(""), appearance: keyboardAppearance)
+            .padding(.standardKeyboardButtonInsets())
+            .onTapGesture(perform: nextLocale)
+            .contextMenu {
+                localeButton(title: "English", locale: .english)
+                localeButton(title: "Swedish", locale: .swedish)
+            }
+    }
+    
+    func autocompleteBarButton(for suggestion: AutocompleteSuggestion) -> AnyView {
         guard let subtitle = suggestion.subtitle else { return AutocompleteToolbar.standardButton(for: suggestion) }
         return AnyView(VStack(spacing: 0) {
             Text(suggestion.title).font(.callout)
@@ -60,15 +84,21 @@ private extension KeyboardView {
         }.frame(maxWidth: .infinity))
     }
     
-    func autocompleteButtonBuilder(suggestion: AutocompleteSuggestion) -> AnyView {
-        AnyView(autocompleteButton(for: suggestion)
-            .background(Color.clearInteractable))
+    func autocompleteBarButtonBuilder(suggestion: AutocompleteSuggestion) -> AnyView {
+        AnyView(autocompleteBarButton(for: suggestion)
+                    .background(Color.clearInteractable))
     }
     
     func buttonBuilder(action: KeyboardAction, size: CGSize) -> AnyView {
         switch action {
         case .space: return AnyView(SystemKeyboardSpaceButtonContent(localeText: "English", spaceText: "space"))
         default: return SystemKeyboard.standardButtonBuilder(action: action, keyboardSize: size)
+        }
+    }
+    
+    func localeButton(title: String, locale: LocaleKey) -> some View {
+        Button(title) {
+            changeLocale(to: locale.locale)
         }
     }
 }

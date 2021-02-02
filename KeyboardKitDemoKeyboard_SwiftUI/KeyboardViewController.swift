@@ -37,7 +37,6 @@ class KeyboardViewController: KeyboardInputViewController {
     // MARK: - View Controller Lifecycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         keyboardActionHandler = DemoKeyboardActionHandler(
             keyboardContext: keyboardContext,
             keyboardBehavior: keyboardBehavior,
@@ -48,7 +47,7 @@ class KeyboardViewController: KeyboardInputViewController {
             context: keyboardContext,
             inputSetProvider: keyboardInputSetProvider,
             dictationReplacement: .keyboardType(.emojis))
-        setup(with: keyboardView)
+        super.viewDidLoad()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -57,6 +56,11 @@ class KeyboardViewController: KeyboardInputViewController {
         DispatchQueue.main.async {
             self.setup(with: self.keyboardView)
         }
+    }
+    
+    override func setupKeyboard() {
+        super.setupKeyboard()
+        setup(with: keyboardView)
     }
     
     

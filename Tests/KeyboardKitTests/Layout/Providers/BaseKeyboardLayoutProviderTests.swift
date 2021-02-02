@@ -16,16 +16,88 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
     
     override func spec() {
         
+        var context: MockKeyboardContext!
+        var inputSetProvider: StandardKeyboardInputSetProvider!
         var provider: BaseKeyboardLayoutProvider!
         
         beforeEach {
-            provider = BaseKeyboardLayoutProvider()
+            context = MockKeyboardContext()
+            inputSetProvider = StandardKeyboardInputSetProvider(context: context)
+            provider = BaseKeyboardLayoutProvider(
+                context: context,
+                inputSetProvider: inputSetProvider)
         }
         
         func expectedItem(for action: KeyboardAction) -> KeyboardLayoutItem {
             let size = provider.layoutSize(for: action, at: 0)
             let insets = EdgeInsets.standardKeyboardButtonInsets()
             return KeyboardLayoutItem(action: action, size: size, insets: insets)
+        }
+        
+        func validateRows(in inputSet: KeyboardInputSet, rows: [KeyboardInputSet.InputRow]) {
+            expect(inputSet.inputRows.count).to(equal(3))
+            expect(inputSet.inputRows.count).to(equal(rows.count))
+            expect(inputSet.inputRows[0].count).to(equal(rows[0].count))
+            expect(inputSet.inputRows[1].count).to(equal(rows[1].count))
+            expect(inputSet.inputRows[2].count).to(equal(rows[2].count))
+        }
+        
+        describe("action rows") {
+            
+            it("is input rows mapped to action rows") {
+                context.locale = LocaleKey.english.locale
+                context.keyboardType = .alphabetic(.lowercased)
+                let actionRows = provider.actionRows
+                let inputRows = provider.inputRows
+                expect(actionRows).to(equal(KeyboardActionRows(characters: inputRows)))
+            }
+        }
+        
+        describe("input rows") {
+    
+            it("is is valid for lowercased alphabetic keyboard type") {
+                context.locale = LocaleKey.english.locale
+                context.keyboardType = .alphabetic(.lowercased)
+                let inputSet = inputSetProvider.alphabeticInputSet()
+                let rows = provider.inputRows
+                validateRows(in: inputSet, rows: rows)
+                expect(inputSet.inputRows[0][0]).to(equal("q"))
+                expect(rows[0][0]).to(equal("q"))
+            }
+            
+            it("is is valid for uppercased alphabetic keyboard type") {
+                context.locale = LocaleKey.english.locale
+                context.keyboardType = .alphabetic(.uppercased)
+                let inputSet = inputSetProvider.alphabeticInputSet()
+                let rows = provider.inputRows
+                validateRows(in: inputSet, rows: rows)
+                expect(inputSet.inputRows[0][0]).to(equal("q"))
+                expect(rows[0][0]).to(equal("Q"))
+            }
+            
+            it("is is valid for numeric keyboard type") {
+                context.keyboardType = .numeric
+                let inputSet = inputSetProvider.numericInputSet()
+                let rows = provider.inputRows
+                validateRows(in: inputSet, rows: rows)
+                expect(inputSet.inputRows[0][0]).to(equal("1"))
+                expect(rows[0][0]).to(equal("1"))
+            }
+            
+            it("is is valid for symbolic keyboard type") {
+                context.keyboardType = .symbolic
+                let inputSet = inputSetProvider.symbolicInputSet()
+                let rows = provider.inputRows
+                validateRows(in: inputSet, rows: rows)
+                expect(inputSet.inputRows[0][0]).to(equal("["))
+                expect(rows[0][0]).to(equal("["))
+            }
+            
+            it("is is empty for other keyboard type") {
+                context.keyboardType = .emojis
+                let rows = provider.inputRows
+                expect(rows.count).to(equal(0))
+            }
         }
         
         describe("layout items for action rows") {

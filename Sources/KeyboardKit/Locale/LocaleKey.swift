@@ -20,4 +20,6 @@ public enum LocaleKey: String {
     case swedish = "sv"
     
     public var key: String { rawValue }
+    
+    public var locale: Locale { Locale(identifier: key) }
 }

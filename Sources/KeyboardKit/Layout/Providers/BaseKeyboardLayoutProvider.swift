@@ -16,10 +16,53 @@ import SwiftUI
  By default, this class will apply a `reference` size to any
  `character` action on the first row, then a `fromReference`
  size to any other `character` buttons.
+ 
+ This class only returns `inputRows` and `actionRows` if the
+ input set provider returns characters. Otherwise, these row
+ properties will be empty.
+ 
+ You can inherit this class and override any implementations
+ you need to customize the final layout.
+ 
+ This class just converts the input provider's current input
+ set to correctly adjusted `inputRows`. This is then used to
+ derive a computed `actionRows` where each char is mapped to
+ a keyboard action. You can override the functions to either
+ change the input chars or the resulting actions. In reality,
+ changing the actions should be a much more common operation.
  */
 open class BaseKeyboardLayoutProvider {
     
-    public init() {}
+    public init(
+        context: KeyboardContext,
+        inputSetProvider: KeyboardInputSetProvider) {
+        self.context = context
+        self.inputSetProvider = inputSetProvider
+    }
+
+    public let context: KeyboardContext
+    public let inputSetProvider: KeyboardInputSetProvider
+    
+    /**
+     The action rows for the layout provider's current state.
+     */
+    open var actionRows: KeyboardActionRows {
+        KeyboardActionRows(characters: inputRows)
+    }
+    
+    /**
+     The input rows for the layout provider's current state.
+     */
+    open var inputRows: [KeyboardInputSet.InputRow] {
+        switch context.keyboardType {
+        case .alphabetic(let state):
+            let rows = inputSetProvider.alphabeticInputSet().inputRows
+            return state.isUppercased ? rows.uppercased() : rows
+        case .numeric: return inputSetProvider.numericInputSet().inputRows
+        case .symbolic: return inputSetProvider.symbolicInputSet().inputRows
+        default: return []
+        }
+    }
     
     /**
      Map keyboard action rows to layout item rows.

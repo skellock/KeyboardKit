@@ -36,21 +36,17 @@ open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardL
         inputSetProvider: KeyboardInputSetProvider,
         leftSpaceAction: KeyboardAction? = nil,
         rightSpaceAction: KeyboardAction? = nil) {
-        self.context = context
-        self.inputSetProvider = inputSetProvider
         self.leftSpaceAction = leftSpaceAction
         self.rightSpaceAction = rightSpaceAction
+        super.init(context: context, inputSetProvider: inputSetProvider)
     }
     
-    private let context: KeyboardContext
-    private let inputSetProvider: KeyboardInputSetProvider
     private let leftSpaceAction: KeyboardAction?
     private let rightSpaceAction: KeyboardAction?
     
     open func keyboardLayout() -> KeyboardLayout {
-        let rows = actionRows(for: context)
         let iPad = context.device.userInterfaceIdiom == .pad
-        return keyboardLayout(iPad: iPad, rows: rows)
+        return keyboardLayout(iPad: iPad, rows: actionRows)
     }
     
     func keyboardLayout(
@@ -243,26 +239,6 @@ private extension StandardKeyboardLayoutProvider {
         result.append(.newLine)
         
         return result
-    }
-}
-
-private extension StandardKeyboardLayoutProvider {
-
-    func actionRows(for context: KeyboardContext) -> KeyboardActionRows {
-        let rows = inputRows(for: context)
-        return KeyboardActionRows(characters: rows)
-    }
-    
-    func inputRows(for context: KeyboardContext) -> [KeyboardInputSet.InputRow] {
-        let provider = inputSetProvider
-        switch context.keyboardType {
-        case .alphabetic(let state):
-            let rows = provider.alphabeticInputSet().inputRows
-            return state.isUppercased ? rows.uppercased() : rows
-        case .numeric: return provider.numericInputSet().inputRows
-        case .symbolic: return provider.symbolicInputSet().inputRows
-        default: return provider.alphabeticInputSet().inputRows
-        }
     }
 }
 

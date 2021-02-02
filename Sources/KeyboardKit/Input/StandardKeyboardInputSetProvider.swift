@@ -10,7 +10,8 @@ import Foundation
 
 /**
  This input set provider provides the standard input set for
- the locale of the current context.
+ the locale of the current context. Note that the characters
+ aren't shift adjusted and only returned as lowercased chars.
  
  You can inherit and customize this class to create your own
  provider that builds on this foundation.

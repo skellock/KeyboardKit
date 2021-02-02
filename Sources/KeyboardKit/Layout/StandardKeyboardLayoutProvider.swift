@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 /**
  This keyboard layout provider bases its layout decisions on
@@ -35,7 +34,7 @@ open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardL
     private let leftSpaceAction: KeyboardAction?
     private let rightSpaceAction: KeyboardAction?
     
-    open func keyboardLayout() -> KeyboardLayout {
+    open override func keyboardLayout() -> KeyboardLayout {
         let iPad = context.device.userInterfaceIdiom == .pad
         return keyboardLayout(iPad: iPad, rows: actionRows)
     }
@@ -43,10 +42,10 @@ open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardL
     func keyboardLayout(
         iPad: Bool,
         rows: KeyboardActionRows) -> KeyboardLayout {
-        let rows = iPad
+        let actions = iPad
             ? iPadActions(for: context, rows: rows)
             : iPhoneActions(for: context, rows: rows)
-        return KeyboardLayout(rows: layoutItems(for: rows))
+        return KeyboardLayout(rows: layoutItemRows(for: actions))
     }
 }
 

@@ -25,11 +25,13 @@ import SwiftUI
  you need to customize the final layout.
  
  This class just converts the input provider's current input
- set to correctly adjusted `inputRows`. This is then used to
+ set to correctly adjusted `inputRows` which is then used to
  derive a computed `actionRows` where each char is mapped to
- a keyboard action. You can override the functions to either
- change the input chars or the resulting actions. In reality,
- changing the actions should be a much more common operation.
+ a keyboard action. This is then used by `layoutItemRows` to
+ map keyboard actions to layout items. You can override this
+ process by overriding any of these properties and functions
+ to create a custom layout. The most convenient way it to do
+ so for the `layoutItemRows` and add layout items directly.
  */
 open class BaseKeyboardLayoutProvider {
     
@@ -44,17 +46,24 @@ open class BaseKeyboardLayoutProvider {
     public let inputSetProvider: KeyboardInputSetProvider
     
     
+    // MARK: - KeyboardLayoutProvider
+    
+    open func keyboardLayout() -> KeyboardLayout {
+        KeyboardLayout(rows: layoutItemRows)
+    }
+    
+    
     // MARK: - Properties
     
     /**
-     The action rows for the layout provider's current state.
+     The action rows for the provider's current state.
      */
     open var actionRows: KeyboardActionRows {
         KeyboardActionRows(characters: inputRows)
     }
     
     /**
-     The input rows for the layout provider's current state.
+     The input rows for the provider's current state.
      */
     open var inputRows: [KeyboardInputSet.InputRow] {
         switch context.keyboardType {
@@ -96,13 +105,20 @@ open class BaseKeyboardLayoutProvider {
         }
     }
     
+    /**
+     The layout items for the provider's current state.
+     */
+    open var layoutItemRows: KeyboardLayoutItemRows {
+        layoutItemRows(for: actionRows)
+    }
+    
     
     // MARK: - Functions
     
     /**
      Map keyboard action rows to layout item rows.
      */
-    open func layoutItems(for actions: KeyboardActionRows) -> KeyboardLayoutItemRows {
+    open func layoutItemRows(for actions: KeyboardActionRows) -> KeyboardLayoutItemRows {
         actions.enumerated().map {
             layoutItems(for: $0.element, at: $0.offset)
         }

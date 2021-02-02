@@ -36,16 +36,8 @@ open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardL
     
     open override func keyboardLayout() -> KeyboardLayout {
         let iPad = context.device.userInterfaceIdiom == .pad
-        return keyboardLayout(iPad: iPad, rows: actionRows)
-    }
-    
-    func keyboardLayout(
-        iPad: Bool,
-        rows: KeyboardActionRows) -> KeyboardLayout {
-        let actions = iPad
-            ? iPadActions(for: context, rows: rows)
-            : iPhoneActions(for: context, rows: rows)
-        return KeyboardLayout(rows: layoutItemRows(for: actions))
+        guard iPad else { return iPhoneKeyboardLayoutProvider(context: context, inputSetProvider: inputSetProvider).keyboardLayout() }
+        return KeyboardLayout(rows: layoutItemRows(for: iPadActions(for: context, rows: actionRows)))
     }
 }
 
@@ -143,90 +135,6 @@ private extension StandardKeyboardLayoutProvider {
             result.append(action)
         }
         result.append(.dismissKeyboard)
-        
-        return result
-    }
-}
-
-
-// MARK: - iPhone layouts
-
-private extension StandardKeyboardLayoutProvider {
-    
-    func iPhoneActions(
-        for context: KeyboardContext,
-        rows: KeyboardActionRows) -> KeyboardActionRows {
-        var rows = rows
-        
-        if rows.count > 0 { rows[0] =
-            iPhoneUpperLeadingActions(for: context) +
-            rows[0] +
-            iPhoneUpperTrailingActions(for: context)
-        }
-        
-        if rows.count > 1 { rows[1] =
-            iPhoneMiddleLeadingActions(for: context) +
-            rows[1] +
-            iPhoneMiddleTrailingActions(for: context)
-        }
-        
-        if rows.count > 2 { rows[2] =
-            iPhoneLowerLeadingActions(for: context) +
-            rows[2] +
-            iPhoneLowerTrailingActions(for: context)
-        }
-        
-        rows.append(iPhoneBottomActions(for: context))
-        
-        return rows
-    }
-    
-    func iPhoneUpperLeadingActions(for context: KeyboardContext) -> KeyboardActions {
-        []
-    }
-    
-    func iPhoneUpperTrailingActions(for context: KeyboardContext) -> KeyboardActions {
-        []
-    }
-    
-    func iPhoneMiddleLeadingActions(for context: KeyboardContext) -> KeyboardActions {
-        []
-    }
-    
-    func iPhoneMiddleTrailingActions(for context: KeyboardContext) -> KeyboardActions {
-        []
-    }
-    
-    func iPhoneLowerLeadingActions(for context: KeyboardContext) -> KeyboardActions {
-        guard let action = keyboardSwitcherActionForBottomInputRow else { return [] }
-        return [action]
-    }
-    
-    func iPhoneLowerTrailingActions(for context: KeyboardContext) -> KeyboardActions {
-        [.backspace]
-    }
-    
-    func iPhoneBottomActions(for context: KeyboardContext) -> KeyboardActions {
-        var result = KeyboardActions()
-        let switcher = keyboardSwitcherActionForBottomRow
-        
-        if let action = switcher {
-            result.append(action)
-        }
-        if context.needsInputModeSwitchKey {
-            result.append(.nextKeyboard)
-        }
-        if isDictationSupported {
-            result.append(.dictation)
-        }
-        if let action = leftSpaceAction {
-            result.append(action)
-        }
-        result.append(.space)
-        if let action = rightSpaceAction {
-            result.append(action)
-        }
-        result.append(.newLine)
         
         return result
     }

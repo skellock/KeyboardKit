@@ -89,6 +89,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `StandardKeyboardActionHandler` gesture actions has been gathered in a single `action(for:on)`.
 * `StandardKeyboardActionHandler` no longer takes an optional sender for keyboard actions.
 * `StandardKeyboardAppearanceProvider` has been renamed to `StandardKeyboardAppearance`.
+* `StandardKeyboardLayoutProvider` no longer has left and right space actions. Implement this in a custom provider instead.
 * `UIImage+pasteboard` has been moved to the demo.
 * `UIImage+photos` has been moved to the demo.
 * `UIImage+resized` has been removed.
@@ -96,7 +97,8 @@ Although these release notes will aim at covering everything that changes in thi
 * `UIInputViewController+NextKeyboard` has been made an internal extension in `UIView+Keyboard`.
 * `View+Button` "standard button" functions have been replaced by a single `keyboardButtonStyle` function.
 * `View+ClearInteractable` has been removed.
-* `View` `keyboardAction(...)` has been renamed to `keyboardGestures(for: ...)`
+* `View` `keyboardAction(...)` has been renamed to `keyboardGestures(for: ...)`.
+* `UIEdgeInsets+Keybpard` `standardKeyboardButtonInsets` has been renamed to `standardKeyboardButtonInsets`.
 
 
 ### UIKit changes

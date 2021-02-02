@@ -18,7 +18,7 @@ class UIEdgeInsets_KeyboardTests: QuickSpec {
         describe("standard keyboard row item padding") {
             
             func result(for idiom: UIUserInterfaceIdiom, orientation: UIInterfaceOrientation) -> UIEdgeInsets {
-                .standardKeyboardRowItemInsets(for: idiom, orientation: orientation)
+                .standardKeyboardButtonInsets(for: idiom, orientation: orientation)
             }
             
             it("is correct for iPhone Portrait") {

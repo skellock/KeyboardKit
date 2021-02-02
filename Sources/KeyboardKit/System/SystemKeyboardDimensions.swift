@@ -17,7 +17,7 @@ public struct SystemKeyboardDimensions: KeyboardDimensions {
     
     public init(
         buttonHeight: CGFloat = .standardKeyboardRowHeight(),
-        buttonInsets: EdgeInsets = EdgeInsets(insets: .standardKeyboardRowItemInsets()),
+        buttonInsets: EdgeInsets = .standardKeyboardButtonInsets(),
         longButtonWidth: CGFloat = 100.0,
         shortButtonWidth: CGFloat = 50.0) {
         self.buttonHeight = buttonHeight
@@ -28,8 +28,8 @@ public struct SystemKeyboardDimensions: KeyboardDimensions {
     
     public let buttonHeight: CGFloat
     public let buttonInsets: EdgeInsets
-    public let longButtonWidth: CGFloat
-    public let shortButtonWidth: CGFloat
+    private let longButtonWidth: CGFloat
+    private let shortButtonWidth: CGFloat
     
     public func width(
         for action: KeyboardAction,
@@ -38,20 +38,20 @@ public struct SystemKeyboardDimensions: KeyboardDimensions {
         switch action {
         case .shift, .backspace: return shortButtonWidth
         case .nextKeyboard: return shortButtonWidth
-        case .keyboardType(let type): return widthKeyboardType(switchingTo: type, context: context)
+        case .keyboardType(let type): return width(for: type, context: context)
         default: return nil
         }
     }
     
-    func widthKeyboardType(switchingTo: KeyboardType, context: KeyboardContext) -> CGFloat? {
+    func width(for type: KeyboardType, context: KeyboardContext) -> CGFloat? {
         let currentType = context.keyboardType
-        let alphWidth: CGFloat? = context.needsInputModeSwitchKey ? shortButtonWidth : nil
+        let alphaWidth = context.needsInputModeSwitchKey ? shortButtonWidth : nil
         
-        switch switchingTo {
+        switch type {
         case .numeric:
             switch currentType {
             case .symbolic: return shortButtonWidth
-            case .alphabetic: return alphWidth
+            case .alphabetic: return alphaWidth
             default: return nil
             }
         case .symbolic:
@@ -59,7 +59,7 @@ public struct SystemKeyboardDimensions: KeyboardDimensions {
             case .numeric: return shortButtonWidth
             default: return nil
             }
-        case .alphabetic: return alphWidth
+        case .alphabetic: return alphaWidth
         default: return nil
         }
     }

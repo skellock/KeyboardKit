@@ -26,13 +26,15 @@ public struct SystemKeyboardButtonRowItem<Content: View>: View {
         appearance: KeyboardAppearance,
         buttonContent: Content,
         dimensions: KeyboardDimensions = SystemKeyboardDimensions(),
-        keyboardSize: CGSize) {
+        keyboardSize: CGSize,
+        referenceSize: Binding<CGSize>) {
         self.item = item
         self.actionHandler = actionHandler
         self.appearance = appearance
         self.buttonContent = buttonContent
         self.dimensions = dimensions
         self.keyboardSize = keyboardSize
+        self.referenceSize = referenceSize
     }
     
     private let item: KeyboardLayoutItem
@@ -41,6 +43,7 @@ public struct SystemKeyboardButtonRowItem<Content: View>: View {
     private let buttonContent: Content
     private let dimensions: KeyboardDimensions
     private let keyboardSize: CGSize
+    private let referenceSize: Binding<CGSize>
     
     @EnvironmentObject private var context: ObservableKeyboardContext
     
@@ -48,7 +51,7 @@ public struct SystemKeyboardButtonRowItem<Content: View>: View {
         buttonContent
             .frame(maxWidth: .infinity)
             .frame(height: dimensions.buttonHeight - dimensions.buttonInsets.top - dimensions.buttonInsets.bottom)
-            .width(item.size.width)
+            .width(item.size.width, referenceSize: referenceSize)
             .keyboardButtonStyle(for: item.action, appearance: appearance)
             .padding(dimensions.buttonInsets)
             .frame(height: item.size.height)

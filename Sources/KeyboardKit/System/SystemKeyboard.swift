@@ -37,7 +37,8 @@ public struct SystemKeyboard: View {
     private let dimensions: KeyboardDimensions
     private let layout: KeyboardLayout
     
-    @State private var size: CGSize = .zero
+    @State private var keyboardSize: CGSize = .zero
+    @State private var referenceSize: CGSize = .zero
     
     @EnvironmentObject private var context: ObservableKeyboardContext
     
@@ -50,7 +51,7 @@ public struct SystemKeyboard: View {
                 row(at: $0.offset, row: $0.element)
             }
         }
-        .bindSize(to: $size)
+        .bindSize(to: $keyboardSize)
         .inputCallout(style: .systemStyle(for: context))
         .secondaryInputCallout(style: .systemStyle(for: context))
     }
@@ -71,35 +72,15 @@ private extension SystemKeyboard {
 
     func row(at index: Int, row: KeyboardLayoutItemRow) -> some View {
         HStack(spacing: 0) {
-            rowEdgeSpacer(at: index)
             ForEach(Array(row.enumerated()), id: \.offset) { item in
                 SystemKeyboardButtonRowItem(
                     item: item.element,
                     actionHandler: actionHandler,
                     appearance: appearance,
-                    buttonContent: buttonBuilder(item.element.action, size),
-                    keyboardSize: size)
+                    buttonContent: buttonBuilder(item.element.action, keyboardSize),
+                    keyboardSize: keyboardSize,
+                    referenceSize: $referenceSize)
             }
-            rowEdgeSpacer(at: index)
         }
-    }
-    
-    @ViewBuilder
-    func rowEdgeSpacer(at index: Int) -> some View {
-        if index == 1 {
-            Spacer(minLength: secondRowPadding)
-        } else {
-            EmptyView()
-        }
-    }
-    
-    /**
-     A temp. way to get side padding on each side on English
-     iPhone keyboards.
-     */
-    var secondRowPadding: CGFloat {
-        guard Locale.current.identifier.starts(with: "en") else { return 0 }
-        guard UIDevice.current.userInterfaceIdiom == .phone else { return 0 }
-        return max(0, 20 * CGFloat(layout.rows[0].count - layout.rows[1].count))
     }
 }

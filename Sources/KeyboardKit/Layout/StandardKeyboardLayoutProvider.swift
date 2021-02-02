@@ -65,28 +65,31 @@ open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
 
 private extension StandardKeyboardLayoutProvider {
     
-    func layoutItem(for action: KeyboardAction) -> KeyboardLayoutItem {
-        let size = KeyboardLayoutItem.Size(width: .available, height: .standardKeyboardRowHeight())
+    func layoutItem(for action: KeyboardAction, at row: Int) -> KeyboardLayoutItem {
+        let size = layoutSize(for: action, at: row)
         let insets = EdgeInsets.standardKeyboardButtonInsets()
         return KeyboardLayoutItem(action: action, size: size, insets: insets)
     }
     
-    func layoutItemRow(for actions: KeyboardActions) -> KeyboardLayoutItemRow {
-        actions.map { layoutItem(for: $0) }
+    func layoutItemRow(for actions: KeyboardActions, at row: Int) -> KeyboardLayoutItemRow {
+        actions.map { layoutItem(for: $0, at: row) }
     }
     
     func layoutItemRows(for actionRows: KeyboardActionRows) -> KeyboardLayoutItemRows {
-        actionRows.map { layoutItemRow(for: $0) }
+        actionRows.enumerated().map { layoutItemRow(for: $0.element, at: $0.offset) }
     }
     
-    func layoutSize(for action: KeyboardAction) -> KeyboardLayoutItem.Size {
-        let width = layoutWidth(for: action)
+    func layoutSize(for action: KeyboardAction, at row: Int) -> KeyboardLayoutItem.Size {
+        let width = layoutWidth(for: action, at: row)
         let height = CGFloat.standardKeyboardRowHeight()
         return KeyboardLayoutItem.Size(width: width, height: height)
     }
     
-    func layoutWidth(for action: KeyboardAction) -> KeyboardLayoutWidth {
-        .available
+    func layoutWidth(for action: KeyboardAction, at row: Int) -> KeyboardLayoutWidth {
+        switch action {
+        //case .character: return row == 0 ? .reference(.available) : .fromReference
+        default: return .available
+        }
     }
 }
 

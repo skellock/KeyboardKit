@@ -20,10 +20,7 @@ extension KeyboardView {
     
     var systemKeyboard: some View {
         VStack(spacing: 0) {
-            HStack {
-                autocompleteBar
-                settingsButton
-            }.frame(height: 50)
+            autocompleteBar
             SystemKeyboard(
                 layout: keyboardLayoutProvider.keyboardLayout(),
                 actionHandler: keyboardActionHandler,
@@ -57,9 +54,13 @@ private extension KeyboardView {
 private extension KeyboardView {
     
     var autocompleteBar: some View {
-        AutocompleteToolbar(
-            suggestions: autocompleteContext.suggestions,
-            buttonBuilder: autocompleteBarButtonBuilder)
+        HStack {
+            AutocompleteToolbar(
+                suggestions: autocompleteContext.suggestions,
+                buttonBuilder: autocompleteBarButtonBuilder)
+            Spacer()
+            settingsButton
+        }.frame(height: 50)
     }
     
     var settingsButton: some View {

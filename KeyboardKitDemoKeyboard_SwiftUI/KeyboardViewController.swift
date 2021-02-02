@@ -48,19 +48,14 @@ class KeyboardViewController: KeyboardInputViewController {
             inputSetProvider: keyboardInputSetProvider,
             dictationReplacement: .keyboardType(.emojis))
         super.viewDidLoad()
+        setup(with: keyboardView)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        self.setup(with: EmptyView())
         DispatchQueue.main.async {
             self.setup(with: self.keyboardView)
         }
-    }
-    
-    override func setupKeyboard() {
-        super.setupKeyboard()
-        setup(with: keyboardView)
     }
     
     

@@ -14,6 +14,8 @@ Although these release notes will aim at covering everything that changes in thi
 
 ### New features
 
+Besides the new things listed below, there are a bunch of new extensions, images etc. 
+
 * `BaseKeyboardLayoutProvider` is a new base class that provides layout providers with base functionality.
 * `BaseSecondaryCalloutActionProvider` is a new base class that provides action providers with base functionality.
 * `Callouts/Providers` have new locale-specific callout action providers.

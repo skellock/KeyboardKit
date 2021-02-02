@@ -25,6 +25,7 @@ public extension Image {
     static var newLine: Image { Image(systemName: "arrow.turn.down.left") }
     static var option: Image { Image(systemName: "option") }
     static var redo: Image { Image(systemName: "arrow.uturn.right") }
+    static var settings: Image { Image(systemName: settingsImageName) }
     static var shiftCapslocked: Image { Image(systemName: "capslock.fill") }
     static var shiftLowercased: Image { Image(systemName: "shift") }
     static var shiftUppercased: Image { Image(systemName: "shift.fill") }
@@ -44,6 +45,10 @@ private extension Image {
     
     static var emojiImageName: String {
         isiOS14 ? "face.smiling" : "person.crop.circle"
+    }
+    
+    static var settingsImageName: String {
+        isiOS14 ? "gear" : "gearshape.fill"
     }
 }
 

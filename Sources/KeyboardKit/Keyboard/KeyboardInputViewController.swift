@@ -125,6 +125,19 @@ open class KeyboardInputViewController: UIInputViewController {
         inputSetProvider: keyboardInputSetProvider)
     
     /**
+     Setting this property will set the context locale, then
+     call `setupKeyboard` to ensure that it changes.
+     */
+    public var keyboardLocale: Locale {
+        get { keyboardContext.locale }
+        set {
+            primaryLanguage = newValue.languageCode
+            keyboardContext.locale = newValue
+            setupKeyboard()
+        }
+    }
+    
+    /**
      The extension's default secondary input callout context.
      */
     public lazy var keyboardSecondaryInputActionProvider: SecondaryCalloutActionProvider = StandardSecondaryCalloutActionProvider(
@@ -138,10 +151,8 @@ open class KeyboardInputViewController: UIInputViewController {
         actionHandler: keyboardActionHandler)
     
     /**
-     The keyboard type that is currently used by the context.
-     
-     Setting this value will update the context's type, then
-     call `setupKeyboard`.
+     Setting this property will update the context type then
+     call `setupKeyboard` to ensure that it changes.
      */
     public var keyboardType: KeyboardType {
         get { keyboardContext.keyboardType }
@@ -192,9 +203,20 @@ open class KeyboardInputViewController: UIInputViewController {
     // MARK: - Public Functions
     
     /**
-     Change keyboard type. By default, this is done with the
-     standard change action of the current context, but this
-     can be changed by overriding this function.
+     Change the keyboard locale.
+     
+     Although you can just set the `keyboardLocale` property
+     directly, this func is injected to the action handler.
+     */
+    open func changeKeyboardLocale(to locale: Locale) {
+        keyboardLocale = locale
+    }
+    
+    /**
+     Change the keyboard type.
+     
+     Although you can just set `keyboardType` directly, this
+     func is injected into the action handler.
      */
     open func changeKeyboardType(to type: KeyboardType) {
         keyboardType = type
@@ -202,6 +224,7 @@ open class KeyboardInputViewController: UIInputViewController {
     
     
     // MARK: - Autocomplete
+    
     
     open func performAutocomplete() {}
     

@@ -24,20 +24,29 @@ extension KeyboardView {
                 AutocompleteToolbar(
                     suggestions: autocompleteContext.suggestions,
                     buttonBuilder: autocompleteButtonBuilder)
-                    .frame(height: 50)
+                    
                 Image.settings
-                
-            }
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(5)
+                    .keyboardButtonStyle(for: .character(""), appearance: keyboardAppearance)
+                    .padding(.standardKeyboardButtonInsets())
+                    .contextMenu {
+                        Button("English") {
+                            self.context.locale = LocaleKey.english.locale
+                        }
+                        Button("Swedish") {
+                            self.context.locale = LocaleKey.swedish.locale
+                        }
+                        
+                    }
+            }.frame(height: 50)
             SystemKeyboard(
-                layout: systemKeyboardLayout,
+                layout: keyboardLayoutProvider.keyboardLayout(),
                 actionHandler: keyboardActionHandler,
                 appearance: keyboardAppearance,
                 buttonBuilder: buttonBuilder)
         }
-    }
-    
-    var systemKeyboardLayout: KeyboardLayout {
-        keyboardLayoutProvider.keyboardLayout()
     }
 }
 

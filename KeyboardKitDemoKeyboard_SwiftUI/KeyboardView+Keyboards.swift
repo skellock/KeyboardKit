@@ -24,7 +24,6 @@ extension KeyboardView {
                 suggestions: autocompleteContext.suggestions,
                 buttonBuilder: autocompleteButtonBuilder)
                 .frame(height: 50)
-            KeyboardButtonWidthPreview()
             SystemKeyboard(
                 layout: systemKeyboardLayout,
                 actionHandler: keyboardActionHandler,

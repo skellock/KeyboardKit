@@ -24,9 +24,9 @@ public struct SystemKeyboard: View {
         appearance: KeyboardAppearance,
         dimensions: KeyboardDimensions = SystemKeyboardDimensions(),
         buttonBuilder: @escaping ButtonBuilder = Self.standardButtonBuilder) {
+        self.layout = layout
         self.actionHandler = actionHandler
         self.appearance = appearance
-        self.rows = layout.rows
         self.dimensions = dimensions
         self.buttonBuilder = buttonBuilder
     }
@@ -35,7 +35,7 @@ public struct SystemKeyboard: View {
     private let appearance: KeyboardAppearance
     private let buttonBuilder: ButtonBuilder
     private let dimensions: KeyboardDimensions
-    private let rows: KeyboardActionRows
+    private let layout: KeyboardLayout
     
     @State private var size: CGSize = .zero
     
@@ -46,8 +46,8 @@ public struct SystemKeyboard: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            ForEach(rows.enumerated().map { $0 }, id: \.offset) {
-                row(at: $0.offset, actions: $0.element)
+            ForEach(layout.rows.enumerated().map { $0 }, id: \.offset) {
+                row(at: $0.offset, row: $0.element)
             }
         }
         .bindSize(to: $size)
@@ -69,15 +69,15 @@ public extension SystemKeyboard {
 
 private extension SystemKeyboard {
 
-    func row(at index: Int, actions: KeyboardActions) -> some View {
+    func row(at index: Int, row: KeyboardLayoutItemRow) -> some View {
         HStack(spacing: 0) {
             rowEdgeSpacer(at: index)
-            ForEach(Array(actions.enumerated()), id: \.offset) {
+            ForEach(Array(row.enumerated()), id: \.offset) { item in
                 SystemKeyboardButtonRowItem(
-                    action: $0.element,
+                    item: item.element,
                     actionHandler: actionHandler,
                     appearance: appearance,
-                    buttonContent: buttonBuilder($0.element, size),
+                    buttonContent: buttonBuilder(item.element.action, size),
                     keyboardSize: size)
             }
             rowEdgeSpacer(at: index)
@@ -100,6 +100,6 @@ private extension SystemKeyboard {
     var secondRowPadding: CGFloat {
         guard Locale.current.identifier.starts(with: "en") else { return 0 }
         guard UIDevice.current.userInterfaceIdiom == .phone else { return 0 }
-        return max(0, 20 * CGFloat(rows[0].count - rows[1].count))
+        return max(0, 20 * CGFloat(layout.rows[0].count - layout.rows[1].count))
     }
 }

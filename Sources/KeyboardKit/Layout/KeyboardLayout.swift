@@ -16,9 +16,9 @@ import SwiftUI
  */
 public struct KeyboardLayout: Equatable {
     
-    public init(rows: KeyboardActionRows) {
+    public init(rows: KeyboardLayoutItemRows) {
         self.rows = rows
     }
     
-    public let rows: KeyboardActionRows
+    public let rows: KeyboardLayoutItemRows
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import UIKit
 
 /**
@@ -59,7 +59,34 @@ open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
         let rows = iPad
             ? iPadActions(for: context, rows: rows)
             : iPhoneActions(for: context, rows: rows)
-        return KeyboardLayout(rows: rows)
+        return KeyboardLayout(rows: layoutItemRows(for: rows))
+    }
+}
+
+private extension StandardKeyboardLayoutProvider {
+    
+    func layoutItem(for action: KeyboardAction) -> KeyboardLayoutItem {
+        let size = KeyboardLayoutItem.Size(width: .available, height: .standardKeyboardRowHeight())
+        let insets = EdgeInsets.standardKeyboardButtonInsets()
+        return KeyboardLayoutItem(action: action, size: size, insets: insets)
+    }
+    
+    func layoutItemRow(for actions: KeyboardActions) -> KeyboardLayoutItemRow {
+        actions.map { layoutItem(for: $0) }
+    }
+    
+    func layoutItemRows(for actionRows: KeyboardActionRows) -> KeyboardLayoutItemRows {
+        actionRows.map { layoutItemRow(for: $0) }
+    }
+    
+    func layoutSize(for action: KeyboardAction) -> KeyboardLayoutItem.Size {
+        let width = layoutWidth(for: action)
+        let height = CGFloat.standardKeyboardRowHeight()
+        return KeyboardLayoutItem.Size(width: width, height: height)
+    }
+    
+    func layoutWidth(for action: KeyboardAction) -> KeyboardLayoutWidth {
+        .available
     }
 }
 

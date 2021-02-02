@@ -8,6 +8,19 @@
 
 import Foundation
 
+public extension String {
+    
+    /**
+     Whether or not the string is lowercased.
+     */
+    var isLowercased: Bool { self == lowercased() && self != uppercased() }
+    
+    /**
+     Whether or not the string is uppercased.
+     */
+    var isUppercased: Bool { self == uppercased() && self != lowercased() }
+}
+
 public extension Sequence where Iterator.Element == String {
     
     /**

@@ -47,8 +47,7 @@ class KeyboardViewController: KeyboardInputViewController {
         keyboardLayoutProvider = StandardKeyboardLayoutProvider(
             context: keyboardContext,
             inputSetProvider: keyboardInputSetProvider,
-            leftSpaceAction: .keyboardType(.emojis),
-            rightSpaceAction: .keyboardType(.images))
+            dictationReplacement: .keyboardType(.emojis))
         setup(with: keyboardView)
     }
     

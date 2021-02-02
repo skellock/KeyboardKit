@@ -46,8 +46,7 @@ class KeyboardViewController: KeyboardInputViewController {
         keyboardLayoutProvider = StandardKeyboardLayoutProvider(
             context: keyboardContext,
             inputSetProvider: keyboardInputSetProvider,
-            leftSpaceAction: .keyboardType(.emojis),
-            rightSpaceAction: .keyboardType(.images))
+            dictationReplacement: .keyboardType(.emojis))
     }
     
     override func textDidChange(_ textInput: UITextInput?) {

@@ -29,7 +29,7 @@ import UIKit
  gives you a chance to customize the default actions, but in
  a limited way. If you want to make bigger changes, subclass.
  */
-open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
+open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayoutProvider {
     
     public init(
         context: KeyboardContext,
@@ -60,36 +60,6 @@ open class StandardKeyboardLayoutProvider: KeyboardLayoutProvider {
             ? iPadActions(for: context, rows: rows)
             : iPhoneActions(for: context, rows: rows)
         return KeyboardLayout(rows: layoutItemRows(for: rows))
-    }
-}
-
-private extension StandardKeyboardLayoutProvider {
-    
-    func layoutItem(for action: KeyboardAction, at row: Int) -> KeyboardLayoutItem {
-        let size = layoutSize(for: action, at: row)
-        let insets = EdgeInsets.standardKeyboardButtonInsets()
-        return KeyboardLayoutItem(action: action, size: size, insets: insets)
-    }
-    
-    func layoutItemRow(for actions: KeyboardActions, at row: Int) -> KeyboardLayoutItemRow {
-        actions.map { layoutItem(for: $0, at: row) }
-    }
-    
-    func layoutItemRows(for actionRows: KeyboardActionRows) -> KeyboardLayoutItemRows {
-        actionRows.enumerated().map { layoutItemRow(for: $0.element, at: $0.offset) }
-    }
-    
-    func layoutSize(for action: KeyboardAction, at row: Int) -> KeyboardLayoutItem.Size {
-        let width = layoutWidth(for: action, at: row)
-        let height = CGFloat.standardKeyboardRowHeight()
-        return KeyboardLayoutItem.Size(width: width, height: height)
-    }
-    
-    func layoutWidth(for action: KeyboardAction, at row: Int) -> KeyboardLayoutWidth {
-        switch action {
-        //case .character: return row == 0 ? .reference(.available) : .fromReference
-        default: return .available
-        }
     }
 }
 

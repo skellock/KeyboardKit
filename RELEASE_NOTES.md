@@ -14,6 +14,8 @@ Although these release notes will aim at covering everything that changes in thi
 
 ### New features
 
+* `BaseKeyboardLayoutProvider` is a new base class that provides layout providers with base functionality.
+* `BaseSecondaryCalloutActionProvider` is a new base class that provides action providers with base functionality.
 * `Callouts/Providers` have new locale-specific callout action providers.
 * `KeyboardAppearance` has a new `image(for:)`.
 * `KeyboardInputSetProvider` has new locale-specific implementations under `Input/Providers`.

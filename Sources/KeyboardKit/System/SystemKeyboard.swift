@@ -67,7 +67,7 @@ public extension SystemKeyboard {
 
 private extension SystemKeyboard {
 
-    func hStack(for row: KeyboardLayoutItemRow) -> some View {
+    func hStack(for row: KeyboardLayoutItems) -> some View {
         HStack(spacing: 0) {
             ForEach(Array(row.enumerated()), id: \.offset) {
                 hStackItem(for: $0.element)

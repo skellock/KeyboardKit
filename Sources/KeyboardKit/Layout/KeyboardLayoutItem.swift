@@ -50,9 +50,9 @@ public struct KeyboardLayoutItem: Equatable {
 /**
  This is an alias for an array of `KeyboardLayoutItem`s.
  */
-public typealias KeyboardLayoutItemRow = [KeyboardLayoutItem]
+public typealias KeyboardLayoutItems = [KeyboardLayoutItem]
 
 /**
  This is an alias for an array of `KeyboardLayoutItemRow`s.
  */
-public typealias KeyboardLayoutItemRows = [KeyboardLayoutItemRow]
+public typealias KeyboardLayoutItemRows = [KeyboardLayoutItems]

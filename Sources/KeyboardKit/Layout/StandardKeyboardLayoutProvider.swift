@@ -59,7 +59,7 @@ open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardL
         let rows = iPad
             ? iPadActions(for: context, rows: rows)
             : iPhoneActions(for: context, rows: rows)
-        return KeyboardLayout(rows: layoutItemRows(for: rows))
+        return KeyboardLayout(rows: layoutItems(for: rows))
     }
 }
 

@@ -19,6 +19,24 @@ import SwiftUI
  */
 open class BaseKeyboardLayoutProvider {
     
+    public init() {}
+    
+    /**
+     Map keyboard action rows to layout item rows.
+     */
+    open func layoutItems(for actions: KeyboardActionRows) -> KeyboardLayoutItemRows {
+        actions.enumerated().map {
+            layoutItems(for: $0.element, at: $0.offset)
+        }
+    }
+    
+    /**
+     Map keyboard actions at a certain row to layout items.
+     */
+    open func layoutItems(for actions: KeyboardActions, at row: Int) -> KeyboardLayoutItems {
+        actions.map { layoutItem(for: $0, at: row) }
+    }
+    
     /**
      Map a keyboard action at a certain row to a layout item.
      */
@@ -26,20 +44,6 @@ open class BaseKeyboardLayoutProvider {
         let size = layoutSize(for: action, at: row)
         let insets = EdgeInsets.standardKeyboardButtonInsets()
         return KeyboardLayoutItem(action: action, size: size, insets: insets)
-    }
-    
-    /**
-     Map keyboard actions at a certain row to layout items.
-     */
-    open func layoutItemRow(for actions: KeyboardActions, at row: Int) -> KeyboardLayoutItems {
-        actions.map { layoutItem(for: $0, at: row) }
-    }
-    
-    /**
-     Map keyboard action rows to layout item rows.
-     */
-    open func layoutItemRows(for actionRows: KeyboardActionRows) -> KeyboardLayoutItemRows {
-        actionRows.enumerated().map { layoutItemRow(for: $0.element, at: $0.offset) }
     }
 
     /**

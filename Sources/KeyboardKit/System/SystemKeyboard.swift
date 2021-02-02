@@ -22,19 +22,16 @@ public struct SystemKeyboard: View {
         layout: KeyboardLayout,
         actionHandler: KeyboardActionHandler,
         appearance: KeyboardAppearance,
-        dimensions: KeyboardDimensions = SystemKeyboardDimensions(),
         buttonBuilder: @escaping ButtonBuilder = Self.standardButtonBuilder) {
         self.layout = layout
         self.actionHandler = actionHandler
         self.appearance = appearance
-        self.dimensions = dimensions
         self.buttonBuilder = buttonBuilder
     }
     
     private let actionHandler: KeyboardActionHandler
     private let appearance: KeyboardAppearance
     private let buttonBuilder: ButtonBuilder
-    private let dimensions: KeyboardDimensions
     private let layout: KeyboardLayout
     
     @State private var keyboardSize: CGSize = .zero

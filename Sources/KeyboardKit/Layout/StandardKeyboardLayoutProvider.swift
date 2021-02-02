@@ -19,15 +19,6 @@ import UIKit
  
  You can inherit this class and override any implementations
  to customize the standard layout.
- 
- This provider will fallback to lowercased alphabetic layout
- if the current context state doesn't have a standard layout.
- One example is if the current keyboard type is `.emojis` or
- another non-standard keyboard.
-
- You can provide a custom left and right space action, which
- gives you a chance to customize the default actions, but in
- a limited way. If you want to make bigger changes, subclass.
  */
 open class StandardKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayoutProvider {
     
@@ -118,7 +109,7 @@ private extension StandardKeyboardLayoutProvider {
     }
     
     func iPadLowerLeadingActions(for context: KeyboardContext) -> KeyboardActions {
-        guard let action = context.keyboardType.standardSideKeyboardSwitcherAction else { return [] }
+        guard let action = keyboardSwitcherActionForBottomInputRow else { return [] }
         return [action]
     }
     
@@ -128,7 +119,7 @@ private extension StandardKeyboardLayoutProvider {
     
     func iPadBottomActions(for context: KeyboardContext) -> KeyboardActions {
         var result = KeyboardActions()
-        let switcher = context.keyboardType.standardBottomKeyboardSwitcherAction
+        let switcher = keyboardSwitcherActionForBottomRow
         
         if !context.needsInputModeSwitchKey {
             result.append(.nextKeyboard)
@@ -208,7 +199,7 @@ private extension StandardKeyboardLayoutProvider {
     }
     
     func iPhoneLowerLeadingActions(for context: KeyboardContext) -> KeyboardActions {
-        guard let action = context.keyboardType.standardSideKeyboardSwitcherAction else { return [] }
+        guard let action = keyboardSwitcherActionForBottomInputRow else { return [] }
         return [action]
     }
     
@@ -218,7 +209,7 @@ private extension StandardKeyboardLayoutProvider {
     
     func iPhoneBottomActions(for context: KeyboardContext) -> KeyboardActions {
         var result = KeyboardActions()
-        let switcher = context.keyboardType.standardBottomKeyboardSwitcherAction
+        let switcher = keyboardSwitcherActionForBottomRow
         
         if let action = switcher {
             result.append(action)
@@ -239,26 +230,5 @@ private extension StandardKeyboardLayoutProvider {
         result.append(.newLine)
         
         return result
-    }
-}
-
-private extension KeyboardType {
-    
-    var standardBottomKeyboardSwitcherAction: KeyboardAction? {
-        switch self {
-        case .alphabetic: return .keyboardType(.numeric)
-        case .numeric: return .keyboardType(.alphabetic(.lowercased))
-        case .symbolic: return .keyboardType(.alphabetic(.lowercased))
-        default: return nil
-        }
-    }
-
-    var standardSideKeyboardSwitcherAction: KeyboardAction? {
-        switch self {
-        case .alphabetic(let state): return .shift(currentState: state)
-        case .numeric: return .keyboardType(.symbolic)
-        case .symbolic: return .keyboardType(.numeric)
-        default: return nil
-        }
     }
 }

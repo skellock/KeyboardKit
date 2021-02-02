@@ -43,6 +43,9 @@ open class BaseKeyboardLayoutProvider {
     public let context: KeyboardContext
     public let inputSetProvider: KeyboardInputSetProvider
     
+    
+    // MARK: - Properties
+    
     /**
      The action rows for the layout provider's current state.
      */
@@ -63,6 +66,38 @@ open class BaseKeyboardLayoutProvider {
         default: return []
         }
     }
+    
+    /**
+     The keyboard switcher action that should be on the last
+     keyboard row. It's by default `numeric` for `alphabetic`
+     keyboards and `alphabetic` for `numeric` and `symbolic`.
+     */
+    open var keyboardSwitcherActionForBottomRow: KeyboardAction? {
+        switch context.keyboardType {
+        case .alphabetic: return .keyboardType(.numeric)
+        case .numeric: return .keyboardType(.alphabetic(.lowercased))
+        case .symbolic: return .keyboardType(.alphabetic(.lowercased))
+        default: return nil
+        }
+    }
+    
+    /**
+     The keyboard switcher action that should be on the last
+     keyboard row with char inputs. It's by default a `shift`
+     for `alphabetic`, `symbolic` for `numeric` and `numeric`
+     for `symbolic`.
+     */
+    open var keyboardSwitcherActionForBottomInputRow: KeyboardAction? {
+        switch context.keyboardType {
+        case .alphabetic(let state): return .shift(currentState: state)
+        case .numeric: return .keyboardType(.symbolic)
+        case .symbolic: return .keyboardType(.numeric)
+        default: return nil
+        }
+    }
+    
+    
+    // MARK: - Functions
     
     /**
      Map keyboard action rows to layout item rows.

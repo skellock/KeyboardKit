@@ -100,6 +100,44 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
             }
         }
         
+        describe("keyboard switcher action for bottom row") {
+            
+            func result(for type: KeyboardType) -> KeyboardAction? {
+                context.keyboardType = type
+                return provider.keyboardSwitcherActionForBottomRow
+            }
+            
+            it("is valid for all supported keyboard types") {
+                expect(result(for: .alphabetic(.lowercased))).to(equal(.keyboardType(.numeric)))
+                expect(result(for: .alphabetic(.uppercased))).to(equal(.keyboardType(.numeric)))
+                expect(result(for: .numeric)).to(equal(.keyboardType(.alphabetic(.lowercased))))
+                expect(result(for: .symbolic)).to(equal(.keyboardType(.alphabetic(.lowercased))))
+            }
+            
+            it("is nil for unsupported keyboard types") {
+                expect(result(for: .emojis)).to(beNil())
+            }
+        }
+        
+        describe("keyboard switcher action for bottom input row") {
+            
+            func result(for type: KeyboardType) -> KeyboardAction? {
+                context.keyboardType = type
+                return provider.keyboardSwitcherActionForBottomInputRow
+            }
+            
+            it("is valid for all supported keyboard types") {
+                expect(result(for: .alphabetic(.lowercased))).to(equal(KeyboardAction.shift(currentState: .lowercased)))
+                expect(result(for: .alphabetic(.uppercased))).to(equal(KeyboardAction.shift(currentState: .uppercased)))
+                expect(result(for: .numeric)).to(equal(.keyboardType(.symbolic)))
+                expect(result(for: .symbolic)).to(equal(.keyboardType(.numeric)))
+            }
+            
+            it("is nil for unsupported keyboard types") {
+                expect(result(for: .emojis)).to(beNil())
+            }
+        }
+        
         describe("layout items for action rows") {
             
             func result(for rows: KeyboardActionRows) -> KeyboardLayoutItemRows {

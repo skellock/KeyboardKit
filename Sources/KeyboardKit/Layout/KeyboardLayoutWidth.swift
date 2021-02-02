@@ -15,8 +15,8 @@ import CoreGraphics
 public indirect enum KeyboardLayoutWidth: Equatable {
     
     /**
-     Share any remaining width with other `available` button
-     views on the same row.
+     Share any remaining width with other `available` layout
+     items on the same row.
      */
     case available
     

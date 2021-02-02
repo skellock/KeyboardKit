@@ -15,10 +15,7 @@ public extension Image {
     static var command: Image { Image(systemName: "command") }
     static var control: Image { Image(systemName: "control") }
     static var email: Image { Image(systemName: "envelope") }
-    
-    @available(iOS 14, *)
-    static var emoji: Image { Image(systemName: "face.smiling") }
-    
+    static var emoji: Image { Image(systemName: emojiImageName) }
     static var globe: Image { Image(systemName: "globe") }
     static var images: Image { Image(systemName: "photo") }
     static var keyboard: Image { Image(systemName: "keyboard") }
@@ -35,6 +32,21 @@ public extension Image {
     static var undo: Image { Image(systemName: "arrow.uturn.left") }
 }
 
+private extension Image {
+    
+    static var isiOS14: Bool {
+        if #available(iOS 14, *) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    static var emojiImageName: String {
+        isiOS14 ? "face.smiling" : "person.crop.circle"
+    }
+}
+
 struct ImageButton_Previews: PreviewProvider {
     
     static var images: [Image] = [
@@ -43,7 +55,7 @@ struct ImageButton_Previews: PreviewProvider {
         .command,
         .control,
         .email,
-        //.emoji,
+        .emoji,
         .globe,
         .images,
         .keyboard,

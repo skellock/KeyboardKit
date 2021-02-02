@@ -17,6 +17,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `BaseKeyboardLayoutProvider` is a new base class that provides layout providers with base functionality.
 * `BaseSecondaryCalloutActionProvider` is a new base class that provides action providers with base functionality.
 * `Callouts/Providers` have new locale-specific callout action providers.
+* `Image.emoji` no longer requires iOS 14, but uses `person.crop.circle` as fallback on iOS 13.  
 * `KeyboardAppearance` has a new `image(for:)`.
 * `KeyboardInputSetProvider` has new locale-specific implementations under `Input/Providers`.
 * `KeyboardInputViewController` has a new static `shared` instance.

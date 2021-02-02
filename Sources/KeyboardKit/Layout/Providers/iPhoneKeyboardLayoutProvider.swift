@@ -72,4 +72,3 @@ open class iPhoneKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLay
         [.backspace]
     }
 }
-

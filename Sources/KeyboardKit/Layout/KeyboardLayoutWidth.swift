@@ -1,5 +1,5 @@
 //
-//  KeyboardButtonWidth.swift
+//  KeyboardLayoutWidth.swift
 //  KeyboardKit
 //
 //  Created by Daniel Saidi on 2021-01-21.
@@ -9,10 +9,10 @@
 import CoreGraphics
 
 /**
- This enum describes various ways in which a keyboard button
- can be sized.
+ This enum describes various ways in which a keyboard layout
+ can size its items.
  */
-public indirect enum KeyboardButtonWidth {
+public indirect enum KeyboardLayoutWidth: Equatable {
     
     /**
      Share any remaining width with other `available` button
@@ -39,5 +39,5 @@ public indirect enum KeyboardButtonWidth {
      Apply a certain width and use the result as a reference
      width for other `fromReference`-sized button views.
      */
-    case reference(_ width: KeyboardButtonWidth = .available)
+    case reference(_ width: KeyboardLayoutWidth = .available)
 }

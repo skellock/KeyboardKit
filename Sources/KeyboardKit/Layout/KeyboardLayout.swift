@@ -6,7 +6,8 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
+import SwiftUI
 
 /**
  Keyboard layouts list available actions on a keyboard. They

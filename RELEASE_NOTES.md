@@ -27,6 +27,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `KeyboardInputViewController` has a new `keyboardLayoutProvider`.
 * `KeyboardInputViewController` has a new `keyboardSecondaryInputActionProvider`.
 * `KeyboardInputViewController` has a new `keyboardSecondaryInputCalloutContext`.
+* `Layout` has new types for working with keyboard layouts.
 * `Locale` is a new namespace with a few new locale-specific utils.
 * `LocaleDictionary` is a simple dictionary wrapper to work with localized resources.
 * `LocaleKey` is a simple enum to gather top-level locale identifiers.
@@ -72,6 +73,7 @@ Although these release notes will aim at covering everything that changes in thi
 * `KeyboardAppearance` button properties are prefixed with `button`.
 * `KeyboardAppearance` `font` and `fontWeight` have been merged into a single `font` property.
 * `KeyboardAppearanceProvider` has been renamed to `KeyboardAppearance`.
+* `KeyboardButtonWidth` has been renamed to `KeyboardLayoutWidth`.
 * `KeyboardContext` `actionHandler` has been moved to the input vc.
 * `KeyboardContext` `keyboardAppearanceProvider` has been moved to the input vc.
 * `KeyboardContext` `keyboardBehavior` has been moved to the input vc.

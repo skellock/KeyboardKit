@@ -7,7 +7,7 @@ import SwiftUI
  You have to use `live preview` for this preview to properly
  apply sizes.
  */
-struct KeyboardButtonWidthPreview: View {
+struct KeyboardLayoutPreview: View {
     
     @State var referenceSize: CGSize = .zero
     @State var totalSize: CGSize = .zero
@@ -71,9 +71,9 @@ struct KeyboardButtonWidthPreview: View {
     }
 }
 
-struct KeyboardButtonWidthPreview_Previews: PreviewProvider {
+struct KeyboardLayoutPreview_Previews: PreviewProvider {
     
     static var previews: some View {
-        KeyboardButtonWidthPreview()
+        KeyboardLayoutPreview()
     }
 }

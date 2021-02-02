@@ -17,30 +17,27 @@ public struct SystemKeyboardItem<Content: View>: View {
     
     public init(
         item: KeyboardLayoutItem,
-        actionHandler: KeyboardActionHandler,
+        content: Content,
         appearance: KeyboardAppearance,
-        buttonContent: Content,
         keyboardSize: CGSize,
         referenceSize: Binding<CGSize>) {
         self.item = item
-        self.actionHandler = actionHandler
         self.appearance = appearance
-        self.buttonContent = buttonContent
+        self.content = content
         self.keyboardSize = keyboardSize
         self.referenceSize = referenceSize
     }
     
     private let item: KeyboardLayoutItem
-    private let actionHandler: KeyboardActionHandler
     private let appearance: KeyboardAppearance
-    private let buttonContent: Content
+    private let content: Content
     private let keyboardSize: CGSize
     private let referenceSize: Binding<CGSize>
     
     @EnvironmentObject private var context: ObservableKeyboardContext
     
     public var body: some View {
-        buttonContent
+        content
             .frame(maxWidth: .infinity)
             .frame(height: item.size.height - item.insets.top - item.insets.bottom)
             .width(item.size.width, referenceSize: referenceSize)
@@ -48,6 +45,5 @@ public struct SystemKeyboardItem<Content: View>: View {
             .padding(item.insets)
             .frame(height: item.size.height)
             .background(Color.clearInteractable)
-            .keyboardGestures(for: item.action, actionHandler: actionHandler)
     }
 }

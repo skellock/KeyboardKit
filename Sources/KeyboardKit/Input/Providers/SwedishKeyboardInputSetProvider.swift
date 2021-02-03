@@ -6,20 +6,24 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /**
  This class provides Swedish keyboard input sets.
  */
 public class SwedishKeyboardInputSetProvider: KeyboardInputSetProvider {
     
-    public init() {}
+    public init(device: UIDevice = .current) {
+        self.device = device
+    }
+    
+    private let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
         AlphabeticKeyboardInputSet(inputRows: [
-            ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "å"],
-            ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
-            ["z", "x", "c", "v", "b", "n", "m"]
+            "qwertyuiopå".chars,
+            "asdfghjklöä".chars,
+            bottomRow
         ])
     }
     
@@ -28,6 +32,15 @@ public class SwedishKeyboardInputSetProvider: KeyboardInputSetProvider {
     }
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
-        .standard(currencies: ["€", "$", "£"])
+        .standard(currencies: "€$£".chars)
+    }
+}
+
+private extension SwedishKeyboardInputSetProvider {
+    
+    var bottomRow: [String] {
+        AlphabeticKeyboardInputSet.standardBottomRow(
+            for: device,
+            inputs: "zxcvbnm".chars)
     }
 }

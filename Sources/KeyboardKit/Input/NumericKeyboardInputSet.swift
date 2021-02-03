@@ -24,26 +24,16 @@ public extension NumericKeyboardInputSet {
     }
     
     static func standardTopRow(for device: UIDevice) -> [String] {
-        device.isIpad ? "1234567890`".chars : "1234567890".chars
+        device.isPad ? "1234567890`".chars : "1234567890".chars
     }
     
     static func standardCenterRow(for device: UIDevice, currency: String) -> [String] {
-        device.isIpad
+        device.isPad
             ? "@#".chars + [currency] + "&*()’”+•".chars
             : "-/:;()".chars + [currency] + "&@\"".chars
     }
     
     static func standardBottomRow(for device: UIDevice) -> [String] {
-        device.isIpad ? "%_-=/;:,.".chars : ".,?!’".chars
+        device.isPad ? "%_-=/;:,.".chars : ".,?!’".chars
     }
-}
-
-private extension UIDevice {
-    
-    var isIpad: Bool { userInterfaceIdiom == .pad }
-}
-
-private extension String {
-    
-    var chars: [String] { self.map { String($0) } }
 }

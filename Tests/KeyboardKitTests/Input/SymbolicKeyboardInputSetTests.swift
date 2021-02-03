@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-import KeyboardKit
+@testable import KeyboardKit
 
 class SymbolicKeyboardInputSetTests: QuickSpec {
     
@@ -77,9 +77,4 @@ class SymbolicKeyboardInputSetTests: QuickSpec {
             }
         }
     }
-}
-
-private extension String {
-    
-    var chars: [String] { self.map { String($0) } }
 }

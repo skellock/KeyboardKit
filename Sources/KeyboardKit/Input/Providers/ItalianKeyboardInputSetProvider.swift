@@ -6,20 +6,24 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /**
  This class provides Italian keyboard input sets.
  */
 public class ItalianKeyboardInputSetProvider: KeyboardInputSetProvider {
     
-    public init() {}
+    public init(device: UIDevice = .current) {
+        self.device = device
+    }
+    
+    private let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
         AlphabeticKeyboardInputSet(inputRows: [
-            ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-            ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-            ["z", "x", "c", "v", "b", "n", "m"]
+            "qwertyuiop".chars,
+            "asdfghjkl".chars,
+            bottomRow
         ])
     }
     
@@ -28,6 +32,16 @@ public class ItalianKeyboardInputSetProvider: KeyboardInputSetProvider {
     }
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
-        .standard(currencies: ["$", "£", "¥"])
+        .standard(currencies: "$£¥".chars)
     }
 }
+
+private extension ItalianKeyboardInputSetProvider {
+    
+    var bottomRow: [String] {
+        AlphabeticKeyboardInputSet.standardBottomRow(
+            for: device,
+            inputs: "zxcvbnm".chars)
+    }
+}
+

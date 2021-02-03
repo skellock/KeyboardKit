@@ -8,25 +8,40 @@
 
 import Quick
 import Nimble
-import KeyboardKit
+import UIKit
+@testable import KeyboardKit
 
 class ItalianKeyboardInputSetProviderTests: QuickSpec {
     
     override func spec() {
         
+        var device: MockDevice!
         var provider: KeyboardInputSetProvider!
         
         beforeEach {
-            provider = ItalianKeyboardInputSetProvider()
+            device = MockDevice()
+            provider = ItalianKeyboardInputSetProvider(device: device)
         }
         
         describe("input set provider") {
             
-            it("has correct alphabetic input set") {
-                expect(provider.alphabeticInputSet().inputRows).to(equal([
-                    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-                    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-                    ["z", "x", "c", "v", "b", "n", "m"]
+            it("has correct alphabetic input set for phone") {
+                device.userInterfaceIdiomValue = .phone
+                let result = provider.alphabeticInputSet()
+                expect(result.inputRows).to(equal([
+                    "qwertyuiop".chars,
+                    "asdfghjkl".chars,
+                    "zxcvbnm".chars
+                ]))
+            }
+            
+            it("has correct alphabetic input set for pad") {
+                device.userInterfaceIdiomValue = .pad
+                let result = provider.alphabeticInputSet()
+                expect(result.inputRows).to(equal([
+                    "qwertyuiop".chars,
+                    "asdfghjkl".chars,
+                    "zxcvbnm,.".chars
                 ]))
             }
             

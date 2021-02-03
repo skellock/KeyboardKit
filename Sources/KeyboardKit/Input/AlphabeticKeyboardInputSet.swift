@@ -6,9 +6,16 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /**
  This input set can be used in alphabetic keyboards.
  */
 public class AlphabeticKeyboardInputSet: KeyboardInputSet {}
+
+public extension AlphabeticKeyboardInputSet {
+
+    static func standardBottomRow(for device: UIDevice = .current, inputs: [String]) -> [String] {
+        device.isPad ? inputs + ",.".chars : inputs
+    }
+}

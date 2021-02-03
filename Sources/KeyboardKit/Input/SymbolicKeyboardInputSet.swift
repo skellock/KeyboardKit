@@ -24,26 +24,16 @@ public extension SymbolicKeyboardInputSet {
     }
     
     static func standardTopRow(for device: UIDevice) -> [String] {
-        device.isIpad ? "1234567890`".chars : "[]{}#%^*+=".chars
+        device.isPad ? "1234567890`".chars : "[]{}#%^*+=".chars
     }
     
     static func standardCenterRow(for device: UIDevice, currencies: [String]) -> [String] {
-        device.isIpad
+        device.isPad
             ? currencies + "^[]{}—˚…".chars
             : "_\\|~<>".chars + currencies + ["•"]
     }
     
     static func standardBottomRow(for device: UIDevice) -> [String] {
-        device.isIpad ? "§|~≠\\<>!?".chars : ".,?!’".chars
+        device.isPad ? "§|~≠\\<>!?".chars : ".,?!’".chars
     }
-}
-
-private extension UIDevice {
-    
-    var isIpad: Bool { userInterfaceIdiom == .pad }
-}
-
-private extension String {
-    
-    var chars: [String] { self.map { String($0) } }
 }

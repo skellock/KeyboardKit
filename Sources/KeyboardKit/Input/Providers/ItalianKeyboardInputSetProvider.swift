@@ -11,37 +11,35 @@ import UIKit
 /**
  This class provides Italian keyboard input sets.
  */
-public class ItalianKeyboardInputSetProvider: KeyboardInputSetProvider {
+public class ItalianKeyboardInputSetProvider: DeviceSpecificInputSetProvider {
     
     public init(device: UIDevice = .current) {
         self.device = device
     }
     
-    private let device: UIDevice
+    public let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
         AlphabeticKeyboardInputSet(rows: [
             "qwertyuiop".chars,
             "asdfghjkl".chars,
-            bottomRow
+            row(phone: "zxcvbnm", pad: "zxcvbnm,.")
         ])
     }
     
     public func numericInputSet() -> NumericKeyboardInputSet {
-        .standard(currency: "€")
+        NumericKeyboardInputSet(rows: [
+            "1234567890".chars,
+            row(phone: "-/:;()€&@“", pad: "@#€&*()’”"),
+            row(phone: ".,?!’", pad: "%-+=/;:,.")
+        ])
     }
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
-        .standard(currencies: "$£¥".chars)
+        SymbolicKeyboardInputSet(rows: [
+            row(phone: "[]{}#%^*+=", pad: "1234567890*"),
+            row(phone: "_\\|~<>$£¥•", pad: "$£¥_^[]{}"),
+            row(phone: ".,?!’", pad: "§|~…\\<>!?")
+        ])
     }
 }
-
-private extension ItalianKeyboardInputSetProvider {
-    
-    var bottomRow: [String] {
-        AlphabeticKeyboardInputSet.standardBottomRow(
-            for: device,
-            inputs: "zxcvbnm".chars)
-    }
-}
-

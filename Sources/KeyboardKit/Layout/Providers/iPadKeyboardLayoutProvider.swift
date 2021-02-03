@@ -67,7 +67,7 @@ open class iPadKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayou
         case dictationReplacement: return .useReference
         case .backspace: return .percentage(0.1)
         case .dismissKeyboard: return .useReferencePercentage(1.8)
-        case .keyboardType: return .useReference
+        case .keyboardType: return row == 2 ? .available : .useReference
         case .nextKeyboard: return .useReference
         default: return super.layoutWidth(for: action, at: row)
         }

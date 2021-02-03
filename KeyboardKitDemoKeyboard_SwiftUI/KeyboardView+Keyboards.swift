@@ -73,6 +73,8 @@ private extension KeyboardView {
             .onTapGesture(perform: nextLocale)
             .contextMenu {
                 localeButton(title: "English", locale: .english)
+                localeButton(title: "German", locale: .german)
+                localeButton(title: "Italian", locale: .italian)
                 localeButton(title: "Swedish", locale: .swedish)
             }
     }

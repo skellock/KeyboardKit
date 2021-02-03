@@ -40,14 +40,6 @@ open class iPadKeyboardLayoutProvider: BaseKeyboardLayoutProvider, KeyboardLayou
         return rows
     }
     
-    open override var inputRows: [KeyboardInputSet.InputRow] {
-        var rows = super.inputRows
-        assert(rows.count > 2, "iPad layouts require at least 3 input row.")
-        rows[2].append(",")
-        rows[2].append(".")
-        return rows
-    }
-    
     open var bottomActions: KeyboardActions {
         var result = KeyboardActions()
         if let action = keyboardSwitcherActionForBottomRow { result.append(action) }

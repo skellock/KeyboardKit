@@ -17,21 +17,20 @@ import SwiftUI
  `character` action on the first row, then a `fromReference`
  size to any other `character` buttons.
  
- This class only returns `inputRows` and `actionRows` if the
- input set provider returns characters. Otherwise, these row
- properties will be empty.
- 
  You can inherit this class and override any implementations
  you need to customize the final layout.
  
  This class just converts the input provider's current input
- set to correctly adjusted `inputRows` which is then used to
- derive a computed `actionRows` where each char is mapped to
- a keyboard action. This is then used by `layoutItemRows` to
- map keyboard actions to layout items. You can override this
- process by overriding any of these properties and functions
- to create a custom layout. The most convenient way it to do
- so for the `layoutItemRows` and add layout items directly.
+ set to correctly adjusted `inputRows` which is then used by
+ `actionRows` where each char is mapped to a keyboard action.
+ It is then used by `layoutRows` where each action is mapped
+ to a layout item. You can override any properties/functions
+ to create custom layouts, but the most convenient way is to
+ override `actionRows`. `inputRows` should not be overridden
+ since it's better to adjust the input provider. `actionRows`
+ lets you add actions that then gets mapped with the current
+ rules of the provider. Overriding `layoutRows` requires you
+ to specify the entire layout item.
  */
 open class BaseKeyboardLayoutProvider {
     
@@ -52,18 +51,8 @@ open class BaseKeyboardLayoutProvider {
     // MARK: - KeyboardLayoutProvider
     
     open func keyboardLayout() -> KeyboardLayout {
-        KeyboardLayout(rows: layoutItemRows)
+        KeyboardLayout(rows: layoutRows)
     }
-    
-    
-    // MARK: - Shortcut Properties
-    
-    public var isPhone: Bool { context.device.userInterfaceIdiom == .phone }
-    public var isPad: Bool { context.device.userInterfaceIdiom == .pad }
-    public var isPortrait: Bool { context.deviceOrientation.isPortrait }
-    public var isLandscape: Bool { context.deviceOrientation.isLandscape }
-    public var needsDictation: Bool { needsInputSwitcher }
-    public var needsInputSwitcher: Bool { context.needsInputModeSwitchKey }
     
     
     // MARK: - Properties
@@ -121,7 +110,7 @@ open class BaseKeyboardLayoutProvider {
     /**
      The layout items for the provider's current state.
      */
-    open var layoutItemRows: KeyboardLayoutItemRows {
+    open var layoutRows: KeyboardLayoutItemRows {
         layoutItemRows(for: actionRows)
     }
     
@@ -171,4 +160,17 @@ open class BaseKeyboardLayoutProvider {
         default: return .available
         }
     }
+}
+
+
+// MARK: - Shortcut Properties
+
+public extension BaseKeyboardLayoutProvider {
+    
+    var isPhone: Bool { context.device.userInterfaceIdiom == .phone }
+    var isPad: Bool { context.device.userInterfaceIdiom == .pad }
+    var isPortrait: Bool { context.deviceOrientation.isPortrait }
+    var isLandscape: Bool { context.deviceOrientation.isLandscape }
+    var needsDictation: Bool { needsInputSwitcher }
+    var needsInputSwitcher: Bool { context.needsInputModeSwitchKey }
 }

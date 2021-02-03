@@ -11,36 +11,37 @@ import UIKit
 /**
  This class provides Swedish keyboard input sets.
  */
-public class SwedishKeyboardInputSetProvider: KeyboardInputSetProvider {
+public class SwedishKeyboardInputSetProvider: DeviceSpecificInputSetProvider {
     
     public init(device: UIDevice = .current) {
         self.device = device
     }
     
-    private let device: UIDevice
+    public let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
         AlphabeticKeyboardInputSet(rows: [
             "qwertyuiopå".chars,
             "asdfghjklöä".chars,
-            bottomRow
+            row(phone: "zxcvbnm", pad: "zxcvbnm,.")
         ])
     }
     
     public func numericInputSet() -> NumericKeyboardInputSet {
-        .standard(currency: "kr")
+        NumericKeyboardInputSet(rows: [
+            row(phone: "1234567890", pad: "1234567890`"),
+            device.isPhone
+                ? "-/:;()".chars + ["kr"] + "&@“".chars
+                : "@#".chars + ["kr"] + "&*()’”+•".chars,
+            row(phone: ".,?!’", pad: "%_-=/;:,.")
+        ])
     }
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
-        .standard(currencies: "€$£".chars)
-    }
-}
-
-private extension SwedishKeyboardInputSetProvider {
-    
-    var bottomRow: [String] {
-        AlphabeticKeyboardInputSet.standardBottomRow(
-            for: device,
-            inputs: "zxcvbnm".chars)
+        SymbolicKeyboardInputSet(rows: [
+            row(phone: "[]{}#%^*+=", pad: "1234567890´"),
+            row(phone: "_\\|~<>€$¥•", pad: "€$£^[]{}—˚…"),
+            row(phone: ".,?!’", pad: "§|~≠\\<>!?")
+        ])
     }
 }

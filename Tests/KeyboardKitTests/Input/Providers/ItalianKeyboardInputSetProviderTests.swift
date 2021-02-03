@@ -80,7 +80,7 @@ class ItalianKeyboardInputSetProviderTests: QuickSpec {
                 
                 it("has correct symbolic input set") {
                     expect(provider.symbolicInputSet().rows).to(equal([
-                        "1234567890*".chars,
+                        "1234567890".chars,
                         "$£¥_^[]{}".chars,
                         "§|~…\\<>!?".chars
                     ]))

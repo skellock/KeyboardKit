@@ -37,7 +37,7 @@ public class ItalianKeyboardInputSetProvider: DeviceSpecificInputSetProvider {
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
         SymbolicKeyboardInputSet(rows: [
-            row(phone: "[]{}#%^*+=", pad: "1234567890*"),
+            row(phone: "[]{}#%^*+=", pad: "1234567890"),
             row(phone: "_\\|~<>$£¥•", pad: "$£¥_^[]{}"),
             row(phone: ".,?!’", pad: "§|~…\\<>!?")
         ])

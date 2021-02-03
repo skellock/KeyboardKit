@@ -40,12 +40,6 @@ private extension KeyboardView {
             keyboardInputViewController.changeKeyboardLocale(to: locale)
         }
     }
-    
-    func nextLocale() {
-        let isSwedish = context.locale.identifier == "sv"
-        let new: LocaleKey = isSwedish ? .english : .swedish
-        changeLocale(to: new.locale)
-    }
 }
 
 
@@ -70,7 +64,6 @@ private extension KeyboardView {
             .padding(5)
             .keyboardButtonStyle(for: .character(""), appearance: keyboardAppearance)
             .padding(.standardKeyboardButtonInsets())
-            .onTapGesture(perform: nextLocale)
             .contextMenu {
                 localeButton(title: "English", locale: .english)
                 localeButton(title: "German", locale: .german)

@@ -51,13 +51,6 @@ class KeyboardViewController: KeyboardInputViewController {
         setup(with: keyboardView)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            self.setup(with: self.keyboardView)
-        }
-    }
-    
     
     // MARK: - Properties
     

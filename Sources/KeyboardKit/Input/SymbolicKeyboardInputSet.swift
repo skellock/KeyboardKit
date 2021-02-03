@@ -16,7 +16,7 @@ public class SymbolicKeyboardInputSet: KeyboardInputSet {}
 public extension SymbolicKeyboardInputSet {
     
     static func standard(for device: UIDevice = .current, currencies: [String]) -> SymbolicKeyboardInputSet {
-        SymbolicKeyboardInputSet(inputRows: [
+        SymbolicKeyboardInputSet(rows: [
             standardTopRow(for: device),
             standardCenterRow(for: device, currencies: currencies),
             standardBottomRow(for: device)

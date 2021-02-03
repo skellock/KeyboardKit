@@ -16,7 +16,7 @@ public class NumericKeyboardInputSet: KeyboardInputSet {}
 public extension NumericKeyboardInputSet {
     
     static func standard(for device: UIDevice = .current, currency: String) -> NumericKeyboardInputSet {
-        NumericKeyboardInputSet(inputRows: [
+        NumericKeyboardInputSet(rows: [
             standardTopRow(for: device),
             standardCenterRow(for: device, currency: currency),
             standardBottomRow(for: device)

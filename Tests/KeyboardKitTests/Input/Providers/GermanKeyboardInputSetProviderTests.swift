@@ -28,7 +28,7 @@ class GermanKeyboardInputSetProviderTests: QuickSpec {
             it("has correct alphabetic input set for phone") {
                 device.userInterfaceIdiomValue = .phone
                 let result = provider.alphabeticInputSet()
-                expect(result.inputRows).to(equal([
+                expect(result.rows).to(equal([
                     "qwertzuiopü".chars,
                     "asdfghjklöä".chars,
                     "yxcvbnm".chars
@@ -38,7 +38,7 @@ class GermanKeyboardInputSetProviderTests: QuickSpec {
             it("has correct alphabetic input set for pad") {
                 device.userInterfaceIdiomValue = .pad
                 let result = provider.alphabeticInputSet()
-                expect(result.inputRows).to(equal([
+                expect(result.rows).to(equal([
                     "qwertzuiopü".chars,
                     "asdfghjklöä".chars,
                     "yxcvbnm,.ß".chars
@@ -46,14 +46,14 @@ class GermanKeyboardInputSetProviderTests: QuickSpec {
             }
             
             it("has correct numeric input set") {
-                let rows = provider.numericInputSet().inputRows
-                let expected = NumericKeyboardInputSet.standard(currency: "€").inputRows
+                let rows = provider.numericInputSet().rows
+                let expected = NumericKeyboardInputSet.standard(currency: "€").rows
                 expect(rows).to(equal(expected))
             }
             
             it("has correct symbolic input set") {
-                let rows = provider.symbolicInputSet().inputRows
-                let expected = SymbolicKeyboardInputSet.standard(currencies: ["$", "£", "¥"]).inputRows
+                let rows = provider.symbolicInputSet().rows
+                let expected = SymbolicKeyboardInputSet.standard(currencies: ["$", "£", "¥"]).rows
                 expect(rows).to(equal(expected))
             }
         }

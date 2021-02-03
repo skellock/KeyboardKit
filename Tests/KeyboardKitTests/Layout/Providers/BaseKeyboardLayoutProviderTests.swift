@@ -34,12 +34,12 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
             return KeyboardLayoutItem(action: action, size: size, insets: insets)
         }
         
-        func validateRows(in inputSet: KeyboardInputSet, rows: [KeyboardInputSet.InputRow]) {
-            expect(inputSet.inputRows.count).to(equal(3))
-            expect(inputSet.inputRows.count).to(equal(rows.count))
-            expect(inputSet.inputRows[0].count).to(equal(rows[0].count))
-            expect(inputSet.inputRows[1].count).to(equal(rows[1].count))
-            expect(inputSet.inputRows[2].count).to(equal(rows[2].count))
+        func validateRows(in inputSet: KeyboardInputSet, rows: [KeyboardInputRow]) {
+            expect(inputSet.rows.count).to(equal(3))
+            expect(inputSet.rows.count).to(equal(rows.count))
+            expect(inputSet.rows[0].count).to(equal(rows[0].count))
+            expect(inputSet.rows[1].count).to(equal(rows[1].count))
+            expect(inputSet.rows[2].count).to(equal(rows[2].count))
         }
         
         describe("action rows") {
@@ -61,7 +61,7 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
                 let inputSet = inputSetProvider.alphabeticInputSet()
                 let rows = provider.inputRows
                 validateRows(in: inputSet, rows: rows)
-                expect(inputSet.inputRows[0][0]).to(equal("q"))
+                expect(inputSet.rows[0][0]).to(equal("q"))
                 expect(rows[0][0]).to(equal("q"))
             }
             
@@ -71,7 +71,7 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
                 let inputSet = inputSetProvider.alphabeticInputSet()
                 let rows = provider.inputRows
                 validateRows(in: inputSet, rows: rows)
-                expect(inputSet.inputRows[0][0]).to(equal("q"))
+                expect(inputSet.rows[0][0]).to(equal("q"))
                 expect(rows[0][0]).to(equal("Q"))
             }
             
@@ -80,7 +80,7 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
                 let inputSet = inputSetProvider.numericInputSet()
                 let rows = provider.inputRows
                 validateRows(in: inputSet, rows: rows)
-                expect(inputSet.inputRows[0][0]).to(equal("1"))
+                expect(inputSet.rows[0][0]).to(equal("1"))
                 expect(rows[0][0]).to(equal("1"))
             }
             
@@ -89,7 +89,7 @@ class BaseKeyboardLayoutProviderTests: QuickSpec {
                 let inputSet = inputSetProvider.symbolicInputSet()
                 let rows = provider.inputRows
                 validateRows(in: inputSet, rows: rows)
-                expect(inputSet.inputRows[0][0]).to(equal("["))
+                expect(inputSet.rows[0][0]).to(equal("["))
                 expect(rows[0][0]).to(equal("["))
             }
             

@@ -11,37 +11,35 @@ import UIKit
 /**
  This class provides English keyboard input sets.
  */
-public class EnglishKeyboardInputSetProvider: KeyboardInputSetProvider {
+public class EnglishKeyboardInputSetProvider: DeviceSpecificInputSetProvider {
     
     public init(device: UIDevice = .current) {
         self.device = device
     }
     
-    private let device: UIDevice
+    public let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
-        AlphabeticKeyboardInputSet(inputRows: [
+        AlphabeticKeyboardInputSet(rows: [
             "qwertyuiop".chars,
             "asdfghjkl".chars,
-            bottomRow
+            "zxcvbnm\(device.isPhone ? "" : ",.")".chars
         ])
     }
     
     public func numericInputSet() -> NumericKeyboardInputSet {
-        .standard(currency: "$")
+        NumericKeyboardInputSet(rows: [
+            "1234567890".chars,
+            row(phone: "-/:;()$&@“", pad: "@#$&*()’”"),
+            row(phone: ".,?!’", pad: "%-+=/;:,.")
+        ])
     }
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
-        .standard(currencies: "€£¥".chars)
+        SymbolicKeyboardInputSet(rows: [
+            row(phone: "[]{}#%^*+=", pad: "1234567890"),
+            row(phone: "_\\|~<>€£¥•", pad: "€£¥_^[]{}"),
+            row(phone: ".,?!’", pad: "§|~…\\<>!?")
+        ])
     }
 }
-
-private extension EnglishKeyboardInputSetProvider {
-    
-    var bottomRow: [String] {
-        AlphabeticKeyboardInputSet.standardBottomRow(
-            for: device,
-            inputs: "zxcvbnm".chars)
-    }
-}
-

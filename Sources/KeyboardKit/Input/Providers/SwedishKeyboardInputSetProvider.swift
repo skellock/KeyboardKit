@@ -20,7 +20,7 @@ public class SwedishKeyboardInputSetProvider: KeyboardInputSetProvider {
     private let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
-        AlphabeticKeyboardInputSet(inputRows: [
+        AlphabeticKeyboardInputSet(rows: [
             "qwertyuiopå".chars,
             "asdfghjklöä".chars,
             bottomRow

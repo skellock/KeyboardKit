@@ -20,7 +20,7 @@ public class GermanKeyboardInputSetProvider: KeyboardInputSetProvider {
     private let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
-        AlphabeticKeyboardInputSet(inputRows: [
+        AlphabeticKeyboardInputSet(rows: [
             "qwertzuiopü".chars,
             "asdfghjklöä".chars,
             device.isPad ? "yxcvbnm,.ß".chars : "yxcvbnm".chars

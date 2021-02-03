@@ -28,7 +28,7 @@ class SymbolicKeyboardInputSetTests: QuickSpec {
                     device.userInterfaceIdiomValue = .phone
                 }
                 
-                func validate(rows: [KeyboardInputSet.InputRow], for currencies: [String]) -> Bool {
+                func validate(rows: [KeyboardInputRow], for currencies: [String]) -> Bool {
                     rows == [
                         "[]{}#%^*+=".chars,
                         "_\\|~<>".chars + currencies + ["•"],
@@ -38,13 +38,13 @@ class SymbolicKeyboardInputSetTests: QuickSpec {
                 
                 it("is valid for European currencies") {
                     let currencies = ["€", "£", "¥"]
-                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).rows
                     expect(validate(rows: rows, for: currencies)).to(beTrue())
                 }
                 
                 it("is valid for Swedish currency") {
                     let currencies = ["€", "$", "£"]
-                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).rows
                     expect(validate(rows: rows, for: currencies)).to(beTrue())
                 }
             }
@@ -55,7 +55,7 @@ class SymbolicKeyboardInputSetTests: QuickSpec {
                     device.userInterfaceIdiomValue = .pad
                 }
                 
-                func validate(rows: [KeyboardInputSet.InputRow], for currencies: [String]) -> Bool {
+                func validate(rows: [KeyboardInputRow], for currencies: [String]) -> Bool {
                     rows == [
                         "1234567890`".chars,
                         currencies + "^[]{}—˚…".chars,
@@ -65,13 +65,13 @@ class SymbolicKeyboardInputSetTests: QuickSpec {
                 
                 it("is valid for European currencies") {
                     let currencies = ["€", "£", "¥"]
-                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).rows
                     expect(validate(rows: rows, for: currencies)).to(beTrue())
                 }
                 
                 it("is valid for Swedish currency") {
                     let currencies = ["€", "$", "£"]
-                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).rows
                     expect(validate(rows: rows, for: currencies)).to(beTrue())
                 }
             }

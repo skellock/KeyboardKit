@@ -20,7 +20,7 @@ public class ItalianKeyboardInputSetProvider: KeyboardInputSetProvider {
     private let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
-        AlphabeticKeyboardInputSet(inputRows: [
+        AlphabeticKeyboardInputSet(rows: [
             "qwertyuiop".chars,
             "asdfghjkl".chars,
             bottomRow

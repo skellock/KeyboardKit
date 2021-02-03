@@ -19,15 +19,13 @@ import Foundation
  */
 public class KeyboardInputSet: Equatable {
     
-    public init(inputRows: [InputRow]) {
-        self.inputRows = inputRows
+    public init(rows: [KeyboardInputRow]) {
+        self.rows = rows
     }
     
-    public typealias InputRow = [String]
-    
-    public let inputRows: [InputRow]
+    public let rows: [KeyboardInputRow]
     
     public static func == (lhs: KeyboardInputSet, rhs: KeyboardInputSet) -> Bool {
-        lhs.inputRows == rhs.inputRows
+        lhs.rows == rhs.rows
     }
 }

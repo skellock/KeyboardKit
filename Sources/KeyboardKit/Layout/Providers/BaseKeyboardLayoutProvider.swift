@@ -67,13 +67,13 @@ open class BaseKeyboardLayoutProvider {
     /**
      The input rows for the provider's current state.
      */
-    open var inputRows: [KeyboardInputSet.InputRow] {
+    open var inputRows: [KeyboardInputRow] {
         switch context.keyboardType {
         case .alphabetic(let state):
-            let rows = inputSetProvider.alphabeticInputSet().inputRows
+            let rows = inputSetProvider.alphabeticInputSet().rows
             return state.isUppercased ? rows.uppercased() : rows
-        case .numeric: return inputSetProvider.numericInputSet().inputRows
-        case .symbolic: return inputSetProvider.symbolicInputSet().inputRows
+        case .numeric: return inputSetProvider.numericInputSet().rows
+        case .symbolic: return inputSetProvider.symbolicInputSet().rows
         default: return []
         }
     }

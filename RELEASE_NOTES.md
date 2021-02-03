@@ -21,7 +21,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `Callouts/Providers` have new locale-specific callout action providers.
 * `Image.emoji` no longer requires iOS 14, but uses `person.crop.circle` as fallback on iOS 13.
 * `KeyboardAppearance` has a new `image(for:)`.
-* `KeyboardInputSetProvider` has new locale-specific implementations under `Input/Providers`.
+* `KeyboardInputSetProvider` has new locale-specific providers under `Input/Providers`.
 * `KeyboardInputViewController` has a new static `shared` instance.
 * `KeyboardInputViewController` has a new `keyboardActionHandler`.
 * `KeyboardInputViewController` has a new `keyboardAppearance`.
@@ -55,6 +55,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardActionRow` `standardButtonImage` no longer takes a context.
 * `KeyboardBehavior` no longer takes a context as function input.
 * `KeyboardContext` no longer has any services, just inspectable properties.
+* `KeyboardInputSetProvider` implementations now provides punctuation as well.
 * `KeyboardInputSetProvider` no longer takes a context as function input.
 * `KeyboardInputViewController` `context` is now an `ObservableKeyboardContext`.
 * `KeyboardInputViewController` `context` is now called `keyboardContext`.
@@ -88,6 +89,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardContext` `keyboardLayoutProvider` has been moved to the input vc.
 * `KeyboardDimensions` is no longer used and has been removed.
 * `KeyboardInputSet` locale extensions have been converted to separate providers.
+* `KeyboardInputSet` standard input set extensions have been removed.
 * `KeyboardInputViewController` `addKeyboardGestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardInputViewController` `context` has been renamed to `keyboardContext`.
 * `KeyboardInputViewController+Gestures` has been converted to `KeyboardButton+Gestures`.

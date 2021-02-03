@@ -8,6 +8,10 @@
 
 import UIKit
 
+/**
+ This protocol is just a util protocol that extends the type
+ that implements it with more functionality.
+ */
 public protocol DeviceSpecificInputSetProvider: KeyboardInputSetProvider {
     
     var device: UIDevice { get }

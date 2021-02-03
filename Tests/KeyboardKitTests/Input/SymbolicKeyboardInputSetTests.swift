@@ -14,27 +14,72 @@ class SymbolicKeyboardInputSetTests: QuickSpec {
     
     override func spec() {
         
+        var device: MockDevice!
+        
+        beforeEach {
+            device = MockDevice()
+        }
+        
         describe("standard") {
             
-            func validate(rows: [KeyboardInputSet.InputRow], for currencies: [String]) -> Bool {
-                rows == [
-                    ["[", "]", "{", "}", "#", "%", "^", "*", "+", "="],
-                    ["_", "\\", "|", "~", "<", ">"] + currencies + ["•"],
-                    [".", ",", "?", "!", "’"]
-                ]
+            context("for iPhone") {
+                
+                beforeEach {
+                    device.userInterfaceIdiomValue = .phone
+                }
+                
+                func validate(rows: [KeyboardInputSet.InputRow], for currencies: [String]) -> Bool {
+                    rows == [
+                        "[]{}#%^*+=".chars,
+                        "_\\|~<>".chars + currencies + ["•"],
+                        ".,?!’".chars
+                    ]
+                }
+                
+                it("is valid for European currencies") {
+                    let currencies = ["€", "£", "¥"]
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    expect(validate(rows: rows, for: currencies)).to(beTrue())
+                }
+                
+                it("is valid for Swedish currency") {
+                    let currencies = ["€", "$", "£"]
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    expect(validate(rows: rows, for: currencies)).to(beTrue())
+                }
             }
             
-            it("is valid for European currencies") {
-                let currencies = ["€", "£", "¥"]
-                let rows = SymbolicKeyboardInputSet.standard(currencies: currencies).inputRows
-                expect(validate(rows: rows, for: currencies)).to(beTrue())
-            }
-            
-            it("is valid for Swedish currency") {
-                let currencies = ["€", "$", "£"]
-                let rows = SymbolicKeyboardInputSet.standard(currencies: currencies).inputRows
-                expect(validate(rows: rows, for: currencies)).to(beTrue())
+            context("for iPad") {
+                
+                beforeEach {
+                    device.userInterfaceIdiomValue = .pad
+                }
+                
+                func validate(rows: [KeyboardInputSet.InputRow], for currencies: [String]) -> Bool {
+                    rows == [
+                        "1234567890`".chars,
+                        currencies + "^[]{}—˚…".chars,
+                        "§|~≠\\<>!?".chars
+                    ]
+                }
+                
+                it("is valid for European currencies") {
+                    let currencies = ["€", "£", "¥"]
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    expect(validate(rows: rows, for: currencies)).to(beTrue())
+                }
+                
+                it("is valid for Swedish currency") {
+                    let currencies = ["€", "$", "£"]
+                    let rows = SymbolicKeyboardInputSet.standard(for: device, currencies: currencies).inputRows
+                    expect(validate(rows: rows, for: currencies)).to(beTrue())
+                }
             }
         }
     }
+}
+
+private extension String {
+    
+    var chars: [String] { self.map { String($0) } }
 }

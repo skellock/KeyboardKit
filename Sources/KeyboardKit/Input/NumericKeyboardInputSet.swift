@@ -6,7 +6,7 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /**
  This input set can used in numeric keyboards.
@@ -15,23 +15,35 @@ public class NumericKeyboardInputSet: KeyboardInputSet {}
 
 public extension NumericKeyboardInputSet {
     
-    static func standard(currency: String) -> NumericKeyboardInputSet {
+    static func standard(for device: UIDevice = .current, currency: String) -> NumericKeyboardInputSet {
         NumericKeyboardInputSet(inputRows: [
-            standardTopRow,
-            ["-", "/", ":", ";", "(", ")", currency, "&", "@", "\""],
-            standardBottomRow
+            standardTopRow(for: device),
+            standardCenterRow(for: device, currency: currency),
+            standardBottomRow(for: device)
         ])
     }
     
-    static var standardTopRow: [String] {
-        ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    static func standardTopRow(for device: UIDevice) -> [String] {
+        device.isIpad ? "1234567890`".chars : "1234567890".chars
     }
     
-    static func standardCenterRow(currency: String) -> [String] {
-        ["-", "/", ":", ";", "(", ")", currency, "&", "@", "\""]
+    static func standardCenterRow(for device: UIDevice, currency: String) -> [String] {
+        device.isIpad
+            ? "@#".chars + [currency] + "&*()’”+•".chars
+            : "-/:;()".chars + [currency] + "&@\"".chars
     }
     
-    static var standardBottomRow: [String] {
-        [".", ",", "?", "!", "’"]
+    static func standardBottomRow(for device: UIDevice) -> [String] {
+        device.isIpad ? "%_-=/;:,.".chars : ".,?!’".chars
     }
+}
+
+private extension UIDevice {
+    
+    var isIpad: Bool { userInterfaceIdiom == .pad }
+}
+
+private extension String {
+    
+    var chars: [String] { self.map { String($0) } }
 }

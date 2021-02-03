@@ -6,7 +6,7 @@
 //  Copyright © 2021 Daniel Saidi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /**
  This input set can be used in symbolic keyboards.
@@ -15,23 +15,35 @@ public class SymbolicKeyboardInputSet: KeyboardInputSet {}
 
 public extension SymbolicKeyboardInputSet {
     
-    static func standard(currencies: [String]) -> SymbolicKeyboardInputSet {
+    static func standard(for device: UIDevice = .current, currencies: [String]) -> SymbolicKeyboardInputSet {
         SymbolicKeyboardInputSet(inputRows: [
-            standardTopRow,
-            standardCenterRow(currencies: currencies),
-            standardBottomRow
+            standardTopRow(for: device),
+            standardCenterRow(for: device, currencies: currencies),
+            standardBottomRow(for: device)
         ])
     }
     
-    static var standardTopRow: [String] {
-        ["[", "]", "{", "}", "#", "%", "^", "*", "+", "="]
+    static func standardTopRow(for device: UIDevice) -> [String] {
+        device.isIpad ? "1234567890`".chars : "[]{}#%^*+=".chars
     }
     
-    static func standardCenterRow(currencies: [String]) -> [String] {
-        ["_", "\\", "|", "~", "<", ">"] + currencies + ["•"]
+    static func standardCenterRow(for device: UIDevice, currencies: [String]) -> [String] {
+        device.isIpad
+            ? currencies + "^[]{}—˚…".chars
+            : "_\\|~<>".chars + currencies + ["•"]
     }
     
-    static var standardBottomRow: [String] {
-        NumericKeyboardInputSet.standardBottomRow
+    static func standardBottomRow(for device: UIDevice) -> [String] {
+        device.isIpad ? "§|~≠\\<>!?".chars : ".,?!’".chars
     }
+}
+
+private extension UIDevice {
+    
+    var isIpad: Bool { userInterfaceIdiom == .pad }
+}
+
+private extension String {
+    
+    var chars: [String] { self.map { String($0) } }
 }

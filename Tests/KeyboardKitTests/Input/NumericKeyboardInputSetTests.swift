@@ -14,25 +14,72 @@ class NumericKeyboardInputSetTests: QuickSpec {
     
     override func spec() {
         
+        var device: MockDevice!
+        
+        beforeEach {
+            device = MockDevice()
+        }
+        
         describe("standard") {
             
-            func validate(rows: [KeyboardInputSet.InputRow], for currency: String) -> Bool {
-                rows == [
-                    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-                    ["-", "/", ":", ";", "(", ")", currency, "&", "@", "\""],
-                    [".", ",", "?", "!", "’"]
-                ]
+            context("for iPhone") {
+                
+                beforeEach {
+                    device.userInterfaceIdiomValue = .phone
+                }
+                
+                func validate(rows: [KeyboardInputSet.InputRow], for currency: String) -> Bool {
+                    rows == [
+                        "1234567890".chars,
+                        "-/:;()".chars + [currency] + "&@\"".chars,
+                        ".,?!’".chars
+                    ]
+                }
+                
+                it("is valid for Euro currency") {
+                    let currency = "€"
+                    let rows = NumericKeyboardInputSet.standard(for: device, currency: currency).inputRows
+                    expect(validate(rows: rows, for: currency)).to(beTrue())
+                }
+                
+                it("is valid for Swedish currency") {
+                    let currency = "kr"
+                    let rows = NumericKeyboardInputSet.standard(for: device, currency: currency).inputRows
+                    expect(validate(rows: rows, for: currency)).to(beTrue())
+                }
             }
             
-            it("is valid for $ currency") {
-                let rows = NumericKeyboardInputSet.standard(currency: "$").inputRows
-                expect(validate(rows: rows, for: "$")).to(beTrue())
-            }
-            
-            it("is valid for SEK currency") {
-                let rows = NumericKeyboardInputSet.standard(currency: "kr").inputRows
-                expect(validate(rows: rows, for: "kr")).to(beTrue())
+            context("for iPad") {
+                
+                beforeEach {
+                    device.userInterfaceIdiomValue = .pad
+                }
+                
+                func validate(rows: [KeyboardInputSet.InputRow], for currency: String) -> Bool {
+                    rows == [
+                        "1234567890`".chars,
+                        "@#".chars + [currency] + "&*()’”+•".chars,
+                        "%_-=/;:,.".chars
+                    ]
+                }
+                
+                it("is valid for Euro currency") {
+                    let currency = "€"
+                    let rows = NumericKeyboardInputSet.standard(for: device, currency: currency).inputRows
+                    expect(validate(rows: rows, for: currency)).to(beTrue())
+                }
+                
+                it("is valid for Swedish currency") {
+                    let currency = "kr"
+                    let rows = NumericKeyboardInputSet.standard(for: device, currency: currency).inputRows
+                    expect(validate(rows: rows, for: currency)).to(beTrue())
+                }
             }
         }
     }
+}
+
+private extension String {
+    
+    var chars: [String] { self.map { String($0) } }
 }

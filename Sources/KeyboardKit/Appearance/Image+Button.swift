@@ -48,7 +48,7 @@ private extension Image {
     }
     
     static var settingsImageName: String {
-        isiOS14 ? "gear" : "gearshape.fill"
+        isiOS14 ? "gearshape.fill" : "gear" 
     }
 }
 

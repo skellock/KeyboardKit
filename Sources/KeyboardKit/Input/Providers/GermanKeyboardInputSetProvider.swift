@@ -11,27 +11,35 @@ import UIKit
 /**
  This class provides German keyboard input sets.
  */
-public class GermanKeyboardInputSetProvider: KeyboardInputSetProvider {
+public class GermanKeyboardInputSetProvider: DeviceSpecificInputSetProvider {
     
     public init(device: UIDevice = .current) {
         self.device = device
     }
     
-    private let device: UIDevice
+    public let device: UIDevice
     
     public func alphabeticInputSet() -> AlphabeticKeyboardInputSet {
         AlphabeticKeyboardInputSet(rows: [
             "qwertzuiopü".chars,
             "asdfghjklöä".chars,
-            device.isPad ? "yxcvbnm,.ß".chars : "yxcvbnm".chars
+            row(phone: "yxcvbnm", pad: "yxcvbnm,.ß")
         ])
     }
     
     public func numericInputSet() -> NumericKeyboardInputSet {
-        .standard(currency: "€")
+        NumericKeyboardInputSet(rows: [
+            row(phone: "1234567890", pad: "1234567890+"),
+            row(phone: "-/:;()€&@“", pad: "„§€%&/()=‘#"),
+            row(phone: ".,?!’", pad: "—ˋ´…@;:,.-")
+        ])
     }
     
     public func symbolicInputSet() -> SymbolicKeyboardInputSet {
-        .standard(currencies: "$£¥".chars)
+        SymbolicKeyboardInputSet(rows: [
+            row(phone: "[]{}#%^*+=", pad: "1234567890*"),
+            row(phone: "_\\|~<>$£¥•", pad: "$£¥¿–\\[]{}|"),
+            row(phone: ".,?!’", pad: "¡<>≠•^~!?_")
+        ])
     }
 }

@@ -23,38 +23,68 @@ class GermanKeyboardInputSetProviderTests: QuickSpec {
             provider = GermanKeyboardInputSetProvider(device: device)
         }
         
-        describe("input set provider") {
+        describe("input set") {
             
-            it("has correct alphabetic input set for phone") {
-                device.userInterfaceIdiomValue = .phone
-                let result = provider.alphabeticInputSet()
-                expect(result.rows).to(equal([
-                    "qwertzuiopü".chars,
-                    "asdfghjklöä".chars,
-                    "yxcvbnm".chars
-                ]))
+            context("for phones") {
+                
+                beforeEach {
+                    device.userInterfaceIdiomValue = .phone
+                }
+                
+                it("has correct alphabetic input set") {
+                    expect(provider.alphabeticInputSet().rows).to(equal([
+                        "qwertzuiopü".chars,
+                        "asdfghjklöä".chars,
+                        "yxcvbnm".chars
+                    ]))
+                }
+                
+                it("has correct numeric input set") {
+                    expect(provider.numericInputSet().rows).to(equal([
+                        "1234567890".chars,
+                        "-/:;()€&@“".chars,
+                        ".,?!’".chars
+                    ]))
+                }
+                
+                it("has correct symbolic input set") {
+                    expect(provider.symbolicInputSet().rows).to(equal([
+                        "[]{}#%^*+=".chars,
+                        "_\\|~<>$£¥•".chars,
+                        ".,?!’".chars
+                    ]))
+                }
             }
             
-            it("has correct alphabetic input set for pad") {
-                device.userInterfaceIdiomValue = .pad
-                let result = provider.alphabeticInputSet()
-                expect(result.rows).to(equal([
-                    "qwertzuiopü".chars,
-                    "asdfghjklöä".chars,
-                    "yxcvbnm,.ß".chars
-                ]))
-            }
-            
-            it("has correct numeric input set") {
-                let rows = provider.numericInputSet().rows
-                let expected = NumericKeyboardInputSet.standard(currency: "€").rows
-                expect(rows).to(equal(expected))
-            }
-            
-            it("has correct symbolic input set") {
-                let rows = provider.symbolicInputSet().rows
-                let expected = SymbolicKeyboardInputSet.standard(currencies: ["$", "£", "¥"]).rows
-                expect(rows).to(equal(expected))
+            context("for pads") {
+                
+                beforeEach {
+                    device.userInterfaceIdiomValue = .pad
+                }
+                
+                it("has correct alphabetic input set") {
+                    expect(provider.alphabeticInputSet().rows).to(equal([
+                        "qwertzuiopü".chars,
+                        "asdfghjklöä".chars,
+                        "yxcvbnm,.ß".chars
+                    ]))
+                }
+                
+                it("has correct numeric input set") {
+                    expect(provider.numericInputSet().rows).to(equal([
+                        "1234567890+".chars,
+                        "„§€%&/()=‘#".chars,
+                        "—ˋ´…@;:,.-".chars
+                    ]))
+                }
+                
+                it("has correct symbolic input set") {
+                    expect(provider.symbolicInputSet().rows).to(equal([
+                        "1234567890*".chars,
+                        "$£¥¿–\\[]{}|".chars,
+                        "¡<>≠•^~!?_".chars
+                    ]))
+                }
             }
         }
     }

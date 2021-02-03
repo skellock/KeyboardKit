@@ -23,7 +23,7 @@ public class EnglishKeyboardInputSetProvider: DeviceSpecificInputSetProvider {
         AlphabeticKeyboardInputSet(rows: [
             "qwertyuiop".chars,
             "asdfghjkl".chars,
-            "zxcvbnm\(device.isPhone ? "" : ",.")".chars
+            row(phone: "zxcvbnm", pad: "zxcvbnm,.")
         ])
     }
     

@@ -91,7 +91,6 @@ private extension SystemKeyboard {
             .width(item.size.width, totalWidth: keyboardSize.width, referenceSize: $referenceSize)
             .keyboardButtonStyle(for: item.action, appearance: appearance)
             .padding(item.insets)
-            .frame(height: item.size.height)
             .background(Color.clearInteractable)
             .keyboardGestures(for: item.action, actionHandler: actionHandler)
     }

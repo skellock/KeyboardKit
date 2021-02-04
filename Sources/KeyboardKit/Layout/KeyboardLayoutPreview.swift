@@ -1,5 +1,6 @@
 import SwiftUI
 
+#if DEBUG
 /**
  This struct is just used to experiment with varios keyboard
  layouts, button cominations, widths etc.
@@ -77,3 +78,4 @@ struct KeyboardLayoutPreview_Previews: PreviewProvider {
         KeyboardLayoutPreview()
     }
 }
+#endif

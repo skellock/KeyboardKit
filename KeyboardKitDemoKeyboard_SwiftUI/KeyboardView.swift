@@ -25,32 +25,15 @@ struct KeyboardView: View {
     @EnvironmentObject var autocompleteContext: ObservableAutocompleteContext
     @EnvironmentObject var keyboardContext: ObservableKeyboardContext
     @EnvironmentObject var toastContext: KeyboardToastContext
-    
+
     var body: some View {
         keyboardView
             .id(keyboardContext.id)
-            .keyboardToast(
-            context: toastContext,
-            background: toastBackground)
-            .transition(.opacity)
-            
+            .keyboardToast(context: toastContext, background: toastBackground)
     }
     
     @ViewBuilder
     var keyboardView: some View {
-        if keyboardContext.deviceOrientation.isPortrait {
-            keyboardViewRaw
-                .overlay(Text("HEJ + \(keyboardContext.id)"))
-            
-            
-        } else {
-            keyboardViewRaw
-                .overlay(Text("APA + \(keyboardContext.id)"))
-        }
-    }
-    
-    @ViewBuilder
-    var keyboardViewRaw: some View {
         switch keyboardContext.keyboardType {
         case .alphabetic, .numeric, .symbolic: systemKeyboard
         case .emojis: emojiKeyboard
@@ -63,7 +46,7 @@ struct KeyboardView: View {
 extension ObservableKeyboardContext: Identifiable {
     
     public var id: String {
-        locale.identifier + "\(deviceOrientation.isPortrait ? "portrait" : "landscape")" + keyboardType.id
+        locale.identifier + keyboardType.id
     }
 }
 
@@ -98,7 +81,7 @@ private extension KeyboardView {
     @ViewBuilder
     var emojiKeyboard: some View {
         if #available(iOSApplicationExtension 14.0, *) {
-            EmojiCategoryKeyboard().padding(.top)
+            EmojiCategoryKeyboard().padding(.vertical)
         } else {
             Text("Requires iOS 14 or later")
         }
@@ -118,6 +101,9 @@ private extension KeyboardView {
             .padding(5)
             .keyboardButtonStyle(for: .character(""), appearance: keyboardAppearance)
             .padding(.standardKeyboardButtonInsets())
+            .onTapGesture {
+                changeLocale(to: .swedish)
+            }
             .contextMenu {
                 localeButton(title: "English", locale: .english)
                 localeButton(title: "German", locale: .german)
@@ -156,15 +142,15 @@ private extension KeyboardView {
         }
     }
     
-    func changeLocale(to locale: Locale) {
+    func changeLocale(to locale: LocaleKey) {
         DispatchQueue.main.async {
-            keyboardInputViewController.changeKeyboardLocale(to: locale)
+            keyboardInputViewController.changeKeyboardLocale(to: locale.locale)
         }
     }
     
     func localeButton(title: String, locale: LocaleKey) -> some View {
         Button(title) {
-            changeLocale(to: locale.locale)
+            changeLocale(to: locale)
         }
     }
     

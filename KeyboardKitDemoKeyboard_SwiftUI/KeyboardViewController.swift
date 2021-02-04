@@ -50,14 +50,11 @@ class KeyboardViewController: KeyboardInputViewController {
         super.viewDidLoad()
         setup(with: keyboardView)
     }
-//
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//        DispatchQueue.main.async {
-//            self.keyboardContext.sync(with: self)
-//        }
-//    }
-//
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setup(with: keyboardView)
+    }
     
     
     // MARK: - Properties

@@ -24,10 +24,10 @@ public extension View {
     @ViewBuilder
     func width(_ width: KeyboardLayoutWidth, totalWidth: CGFloat = .zero, referenceSize: Binding<CGSize> = .constant(.zero)) -> some View {
         switch width {
-        case .available: self
+        case .available: self.frame(maxWidth: .infinity)
         case .percentage(let percent): self.frame(width: percent * totalWidth)
         case .points(let points): self.frame(width: points)
-        case .reference(let width): self.frame(width: self.width(for: width, totalWidth: totalWidth, referenceSize: referenceSize.wrappedValue)).bindSize(to: referenceSize)
+        case .reference(let width): self.frame(maxWidth: .infinity).frame(width: self.width(for: width, totalWidth: totalWidth, referenceSize: referenceSize.wrappedValue)).bindSize(to: referenceSize)
         case .useReference: self.frame(width: referenceSize.width.wrappedValue)
         case .useReferencePercentage(let percent): self.frame(width: percent * referenceSize.width.wrappedValue)
         }

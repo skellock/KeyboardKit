@@ -34,6 +34,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardInputViewController` has a new `keyboardSecondaryInputCalloutContext`.
 * `KeyboardInputViewController` has new properties for `keyboardLocale` and `keyboardType`.
 * `KeyboardInputViewController` has new functions for `changeKeyboardLocale(to:)` and `changeKeyboardType(to:)`.
+* `KeyboardInputViewController` `setup(with:)` is now open and overridable.
 * `Layout` has new types for working with keyboard layouts.
 * `Locale` is a new namespace with a few new locale-specific utils.
 * `LocaleDictionary` is a simple dictionary wrapper to work with localized resources.
@@ -105,7 +106,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `StandardKeyboardAppearanceProvider` has been renamed to `StandardKeyboardAppearance`.
 * `StandardKeyboardLayoutProvider` no longer has left and right space actions. Implement this in a custom provider instead.
 * `SystemKeyboardDimensions` is no longer used and has been removed.
-* `SystemKeyboardButtonRowItem` has been renamed to `SystemKeyboardItem`.
+* `SystemKeyboardButtonRowItem` has been removed.
 * `UIImage+pasteboard` has been moved to the demo.
 * `UIImage+photos` has been moved to the demo.
 * `UIImage+resized` has been removed.

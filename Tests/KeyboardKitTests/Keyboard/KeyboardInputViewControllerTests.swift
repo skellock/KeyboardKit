@@ -131,20 +131,6 @@ class KeyboardInputViewControllerTests: QuickSpec {
             }
         }
         
-        describe("keyboard locale") {
-            
-            it("is context locale") {
-                vc.keyboardContext.locale = LocaleKey.swedish.locale
-                expect(vc.keyboardLocale).to(equal(vc.keyboardContext.locale))
-            }
-            
-            it("sets context locale") {
-                vc.keyboardContext.locale = LocaleKey.swedish.locale
-                vc.keyboardLocale = LocaleKey.english.locale
-                expect(vc.keyboardContext.locale).to(equal(LocaleKey.english.locale))
-            }
-        }
-        
         describe("keyboard secondary input action provider") {
             
             it("is standard by default") {
@@ -181,20 +167,6 @@ class KeyboardInputViewControllerTests: QuickSpec {
                 expect(view.axis).to(equal(.vertical))
                 expect(view.alignment).to(equal(.fill))
                 expect(view.distribution).to(equal(.equalSpacing))
-            }
-        }
-        
-        describe("keyboard type") {
-            
-            it("is context type") {
-                vc.keyboardContext.keyboardType = .emojis
-                expect(vc.keyboardType).to(equal(.emojis))
-            }
-            
-            it("sets context type") {
-                vc.keyboardContext.keyboardType = .numeric
-                vc.keyboardType = .emojis
-                expect(vc.keyboardContext.keyboardType).to(equal(.emojis))
             }
         }
         

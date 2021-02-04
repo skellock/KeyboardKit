@@ -23,21 +23,35 @@ struct KeyboardView: View {
     var keyboardLayoutProvider: KeyboardLayoutProvider
     
     @EnvironmentObject var autocompleteContext: ObservableAutocompleteContext
-    @EnvironmentObject var context: ObservableKeyboardContext
+    @EnvironmentObject var keyboardContext: ObservableKeyboardContext
     @EnvironmentObject var toastContext: KeyboardToastContext
     
     var body: some View {
         keyboardView
-            .id(context.id)
-            .transition(.opacity)
+            .id(keyboardContext.id)
             .keyboardToast(
             context: toastContext,
             background: toastBackground)
+            .transition(.opacity)
+            
     }
     
     @ViewBuilder
     var keyboardView: some View {
-        switch context.keyboardType {
+        if keyboardContext.deviceOrientation.isPortrait {
+            keyboardViewRaw
+                .overlay(Text("HEJ + \(keyboardContext.id)"))
+            
+            
+        } else {
+            keyboardViewRaw
+                .overlay(Text("APA + \(keyboardContext.id)"))
+        }
+    }
+    
+    @ViewBuilder
+    var keyboardViewRaw: some View {
+        switch keyboardContext.keyboardType {
         case .alphabetic, .numeric, .symbolic: systemKeyboard
         case .emojis: emojiKeyboard
         case .images: imageKeyboard
@@ -49,7 +63,7 @@ struct KeyboardView: View {
 extension ObservableKeyboardContext: Identifiable {
     
     public var id: String {
-        locale.identifier + "\(deviceOrientation.rawValue)" //+ keyboardType.id
+        locale.identifier + "\(deviceOrientation.isPortrait ? "portrait" : "landscape")" + keyboardType.id
     }
 }
 

@@ -92,6 +92,7 @@ Besides the new things listed below, there are a bunch of new extensions, images
 * `KeyboardInputSet` standard input set extensions have been removed.
 * `KeyboardInputViewController` `addKeyboardGestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardInputViewController` `context` has been renamed to `keyboardContext`.
+* `KeyboardInputViewController` `viewWillSyncWithTextDocumentProxy` has been removed.
 * `KeyboardInputViewController+Gestures` has been converted to `KeyboardButton+Gestures`.
 * `KeyboardLayout` `actionRows` has been renamed to `rows`.
 * `PhotosImageService` and `StandardPhotosImageService` have been removed.

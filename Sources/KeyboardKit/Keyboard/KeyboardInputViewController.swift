@@ -33,42 +33,25 @@ open class KeyboardInputViewController: UIInputViewController {
     
     // MARK: - View Controller Lifecycle
     
-    /**
-     This calls the super class implementation, then sets up
-     the keyboard by calling `setupKeyboard`.
-     */
     open override func viewDidLoad() {
         super.viewDidLoad()
         Self.shared = self
         setupKeyboard()
     }
     
-    /**
-     This calls the super class implementation then performs
-     a full context syncs.
-     */
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         keyboardContext.sync(with: self)
-        viewWillSyncWithTextDocumentProxy()
     }
     
-    /**
-     This calls the super class implementation, then updates
-     some `context` properties.
-     */
     open override func viewWillLayoutSubviews() {
-        keyboardContext.hasDictationKey = hasDictationKey
-        keyboardContext.needsInputModeSwitchKey = needsInputModeSwitchKey
+        keyboardContext.sync(with: self)
         super.viewWillLayoutSubviews()
     }
     
-    /**
-     This function is called when this controller appears or
-     when the text document proxy changes.
-     */
-    open func viewWillSyncWithTextDocumentProxy() {
-        keyboardContext.textDocumentProxy = textDocumentProxy
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        keyboardContext.sync(with: self)
+        super.traitCollectionDidChange(previousTraitCollection)
     }
     
     
@@ -235,7 +218,7 @@ open class KeyboardInputViewController: UIInputViewController {
     
     open override func textWillChange(_ textInput: UITextInput?) {
         super.textWillChange(textInput)
-        viewWillSyncWithTextDocumentProxy()
+        keyboardContext.textDocumentProxy = textDocumentProxy
     }
     
     open override func textDidChange(_ textInput: UITextInput?) {

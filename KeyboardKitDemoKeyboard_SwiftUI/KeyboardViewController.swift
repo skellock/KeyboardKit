@@ -51,19 +51,9 @@ class KeyboardViewController: KeyboardInputViewController {
         setup(with: keyboardView)
     }
     
-//    override func changeKeyboardType(to type: KeyboardType) {
-//        super.changeKeyboardType(to: type)
-//        setup(with: keyboardView)
-//    }
-    
-    override func changeKeyboardLocale(to locale: Locale) {
-        super.changeKeyboardLocale(to: locale)
-        setup(with: keyboardView)
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.keyboardContext.sync(with: self)
         super.traitCollectionDidChange(previousTraitCollection)
-        setup(with: keyboardView)
     }
     
     

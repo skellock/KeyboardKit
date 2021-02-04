@@ -8,4 +8,4 @@
 
 import Foundation
 
-public typealias KeyboardInputRow = [String]
+public typealias KeyboardInputRow = [String]

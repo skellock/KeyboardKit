@@ -27,7 +27,10 @@ struct KeyboardView: View {
     @EnvironmentObject var toastContext: KeyboardToastContext
     
     var body: some View {
-        keyboardView.keyboardToast(
+        keyboardView
+            .id(context.id)
+            .transition(.opacity)
+            .keyboardToast(
             context: toastContext,
             background: toastBackground)
     }
@@ -40,6 +43,13 @@ struct KeyboardView: View {
         case .images: imageKeyboard
         default: Button("???", action: switchToDefaultKeyboard)
         }
+    }
+}
+
+extension ObservableKeyboardContext: Identifiable {
+    
+    public var id: String {
+        locale.identifier + "\(deviceOrientation.rawValue)" //+ keyboardType.id
     }
 }
 
@@ -148,5 +158,4 @@ private extension KeyboardView {
         keyboardActionHandler
             .handle(.tap, on: .keyboardType(.alphabetic(.lowercased)))
     }
-    
 }

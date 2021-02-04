@@ -50,12 +50,6 @@ class KeyboardInputViewControllerTests: QuickSpec {
                 vc.viewDidLoad()
                 expect(TestClass.shared).toNot(beNil())
             }
-            
-            it("sets up the keyboard") {
-                expect(vc.hasInvoked(vc.setupKeyboardRef)).to(beFalse())
-                vc.viewDidLoad()
-                expect(vc.hasInvoked(vc.setupKeyboardRef)).to(beTrue())
-            }
         }
         
         describe("view will appear") {
@@ -140,16 +134,14 @@ class KeyboardInputViewControllerTests: QuickSpec {
         describe("keyboard locale") {
             
             it("is context locale") {
-                let context = vc.keyboardContext
-                context.locale = LocaleKey.swedish.locale
-                expect(vc.keyboardLocale).to(equal(context.locale))
+                vc.keyboardContext.locale = LocaleKey.swedish.locale
+                expect(vc.keyboardLocale).to(equal(vc.keyboardContext.locale))
             }
             
-            it("changes primary language and recreates keyboard when set") {
-                let locale = LocaleKey.swedish.locale
-                expect(vc.hasInvoked(vc.setupKeyboardRef)).to(beFalse())
-                vc.keyboardLocale = locale
-                expect(vc.hasInvoked(vc.setupKeyboardRef)).to(beTrue())
+            it("sets context locale") {
+                vc.keyboardContext.locale = LocaleKey.swedish.locale
+                vc.keyboardLocale = LocaleKey.english.locale
+                expect(vc.keyboardContext.locale).to(equal(LocaleKey.english.locale))
             }
         }
         
@@ -195,15 +187,14 @@ class KeyboardInputViewControllerTests: QuickSpec {
         describe("keyboard type") {
             
             it("is context type") {
-                let context = vc.keyboardContext
-                context.keyboardType = .emojis
+                vc.keyboardContext.keyboardType = .emojis
                 expect(vc.keyboardType).to(equal(.emojis))
             }
             
-            it("recreates keyboard when set") {
-                expect(vc.hasInvoked(vc.setupKeyboardRef)).to(beFalse())
+            it("sets context type") {
+                vc.keyboardContext.keyboardType = .numeric
                 vc.keyboardType = .emojis
-                expect(vc.hasInvoked(vc.setupKeyboardRef)).to(beTrue())
+                expect(vc.keyboardContext.keyboardType).to(equal(.emojis))
             }
         }
         
@@ -246,7 +237,6 @@ class KeyboardInputViewControllerTests: QuickSpec {
 
 private class TestClass: KeyboardInputViewController, Mockable {
     
-    lazy var setupKeyboardRef = MockReference(setupKeyboard)
     lazy var performAutocompleteRef = MockReference(performAutocomplete)
     lazy var resetAutocompleteRef = MockReference(resetAutocomplete)
     
@@ -264,10 +254,6 @@ private class TestClass: KeyboardInputViewController, Mockable {
     
     var needsInputModeSwitchKeyValue = false
     override var needsInputModeSwitchKey: Bool { needsInputModeSwitchKeyValue }
-    
-    override func setupKeyboard() {
-        mock.invoke(setupKeyboardRef, args: ())
-    }
     
     override func performAutocomplete() {
         mock.invoke(performAutocompleteRef, args: ())

@@ -36,7 +36,6 @@ open class KeyboardInputViewController: UIInputViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         Self.shared = self
-        setupKeyboard()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -116,7 +115,6 @@ open class KeyboardInputViewController: UIInputViewController {
         set {
             primaryLanguage = newValue.languageCode
             keyboardContext.locale = newValue
-            setupKeyboard()
         }
     }
     
@@ -139,10 +137,7 @@ open class KeyboardInputViewController: UIInputViewController {
      */
     public var keyboardType: KeyboardType {
         get { keyboardContext.keyboardType }
-        set {
-            keyboardContext.keyboardType = newValue
-            setupKeyboard()
-        }
+        set { keyboardContext.keyboardType = newValue }
     }
     
     
@@ -163,14 +158,6 @@ open class KeyboardInputViewController: UIInputViewController {
     
     
     // MARK: - Keyboard Functionality
-    
-    /**
-     Setup the keyboard, given the current state of your app.
-     
-     You can override this function to implement how a setup
-     should behave in your app. This does nothing by default.
-     */
-    open func setupKeyboard() {}
     
     open override func selectionWillChange(_ textInput: UITextInput?) {
         super.selectionWillChange(textInput)

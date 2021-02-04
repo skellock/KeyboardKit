@@ -76,7 +76,7 @@ class KeyboardViewController: KeyboardInputViewController {
     
     // MARK: - Keyboard Functionality
     
-    override func setupKeyboard() {
+    func setupKeyboard() {
         DispatchQueue.main.async {
             self.setupDemoKeyboard()
         }
